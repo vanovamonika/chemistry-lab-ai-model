@@ -3,8 +3,34 @@ import argparse
 import smiles_converter
 import molecular_transformer
 import query_data
+import visual_prediction
 
-# import visual_prediction
+def get_reaction(reaction_type: str, format: str, reactants: str, reagents: str = "", conditions: str = "", temperature: float = 20.0) -> str:
+    reactant_names = reactants
+    reagent_names = reagents
+    if reaction_type == 'inorganic':
+        print("Using inorganic reaction prediction settings.")
+        # You can set specific settings for inorganic reactions here
+        result = query_data.generate_reaction_products(reactants=reactants, reagents=reagents, 
+                        reaction_conditions=conditions, temperature=temperature)
+        print("Generated reaction products:\n", result)
+        return result[0]
+         
+
+    else: # organic or other types
+        print("Using organic reaction prediction settings.")
+        if format == 'names':
+            reactants = smiles_converter.get_smile_reaction_formula_from_names(reactants)
+            if reagents:
+                reagents = smiles_converter.get_smile_reaction_formula_from_names(reagents)
+            print(f"Converted reactants {reactants} to smiles {reactants}")
+            print(f"Converted reagents {reactants} to smiles {reagents}")
+
+        products = molecular_transformer.predict_reaction_products(reactants=reactants, reagents=reagents)
+        print("products: " + products)
+        products_names = smiles_converter.get_name_reaction_formula_from_smiles(products)
+        print(products_names)
+        return reactant_names + " + " + reagent_names + " -> " + products_names
 
 def main():
     parser = argparse.ArgumentParser(
@@ -52,31 +78,15 @@ def main():
     #                    help='List of reagents')
     
     args = parser.parse_args()
-
     reactants = args.reactants
     reagents = args.reagents
-
-    if args.type == 'inorganic':
-        print("Using inorganic reaction prediction settings.")
-        # You can set specific settings for inorganic reactions here
-        query_data.main(reactants=reactants, reagents=reagents, 
-                        reaction_conditions=args.conditions, temperature=args.temperature)
-        return
-
-    else: # organic or other types
-        print("Using organic reaction prediction settings.")
-        if args.format == 'names':
-            reactants = smiles_converter.get_smile_reaction_formula_from_names(args.reactants)
-            if args.reagents:
-                reagents = smiles_converter.get_smile_reaction_formula_from_names(args.reagents)
-            print(f"Converted reactants {args.reactants} to smiles {reactants}")
-            print(f"Converted reagents {args.reactants} to smiles {reagents}")
-
-        products = molecular_transformer.predict_reaction_products(reactants=reactants, reagents=reagents)
-        print("products: " + products)
-        products_names = smiles_converter.get_name_reaction_formula_from_smiles(products)
-        
-        print(products_names)
+    reaction = get_reaction(args.type, args.format, reactants, reagents, args.conditions, args.temperature)
+    appearance_predictor = visual_prediction.AppearancePredictor()
+    visuals = appearance_predictor.predict_visuals(
+        type='reaction',
+        reaction=reaction,
+        conditions=args.conditions)
+    print("Predicted visuals:\n", visuals)
 
 if __name__ == "__main__":
     main()

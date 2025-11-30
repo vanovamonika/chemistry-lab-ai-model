@@ -9,6 +9,7 @@ from langchain_core.prompts import ChatPromptTemplate
 CHROMA_PATH = "chroma"
 
 PROMPT_FILE_PATH = "prompts/only_products_prompt.md"
+ANALYZE_REACTANTS_PROMPT_PATH = "prompts/analyze_reactants_prompt.md"
 
 def load_prompt_template(file_path):
     """Load prompt template from markdown file"""
@@ -23,9 +24,14 @@ def load_prompt_template(file_path):
         print(f"Error loading prompt file: {e}")
         return None
 
-def main(reactants: str, reagents: str = "", reaction_conditions: str = "", temperature: float = 20.0):
+def generate_reaction_products(reactants: str, reagents: str = "", reaction_conditions: str = "", temperature: float = 20.0):
 
-    query_text = f"Reactants: {reactants}\nReagents: {reagents}\nConditions: {reaction_conditions}\nTemperature: {temperature}°C"
+    model = OllamaLLM(model="phi3:mini")
+    analyze_reactants_prompt_content = load_prompt_template(ANALYZE_REACTANTS_PROMPT_PATH)
+    analyze_reactants_prompt = ChatPromptTemplate.from_template(analyze_reactants_prompt_content)
+    reactant_analysis_prompt = analyze_reactants_prompt.format(reactants=reactants, reagents=reagents)
+    reactants_analysis = model.invoke(reactant_analysis_prompt)
+    print("Reactants analysis:\n", reactants_analysis)
 
     # Load the prompt template
     prompt_template_content = load_prompt_template(PROMPT_FILE_PATH)
@@ -47,7 +53,7 @@ def main(reactants: str, reagents: str = "", reaction_conditions: str = "", temp
     db = Chroma(persist_directory=CHROMA_PATH, embedding_function=embedding_function)
 
     # Search the DB.
-    results = db.similarity_search_with_relevance_scores(query_text, k=3)
+    results = db.similarity_search_with_relevance_scores(reactants_analysis, k=3)
     if len(results) == 0:
         print(f"Unable to find matching results.")
         return
@@ -56,19 +62,15 @@ def main(reactants: str, reagents: str = "", reaction_conditions: str = "", temp
     prompt_template = ChatPromptTemplate.from_template(prompt_template_content)
     prompt = prompt_template.format(reactants=reactants, reagents=reagents,
                                    reaction_conditions=reaction_conditions, 
-                                   temperature=temperature, context=context_text, question=query_text)
+                                   temperature=temperature, context=context_text, reactants_analysis=reactants_analysis)
     print("Context used:\n", context_text)
     print("\n" + "="*50 + "\n")
-
-    # Use Ollama with Mistral
-    model = OllamaLLM(model="mistral:7b-instruct")
-    
     print("Generating response...")
     response_text = model.invoke(prompt)
 
-    sources = [doc.metadata.get("source", None) for doc, _score in results]
-    formatted_response = f"Response: {response_text}\nSources: {sources}"
-    print(formatted_response)
-
-if __name__ == "__main__":
-    main()
+    # sources = [doc.metadata.get("source", None) for doc, _score in results]
+    # formatted_response = f"Response: {response_text}\nSources: {sources}"
+    # print(formatted_response)
+    result = response_text.split("\n\n")
+    # print("Generated reaction products:\n", result)
+    return result
