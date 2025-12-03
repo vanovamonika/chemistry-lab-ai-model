@@ -1,5 +1,9 @@
-As an expert chemist, describe the visual appearance changes during this reaction: {reaction}. 
-When a metal is part of the reaction, it is in a form of a solid piece (sheet).
+You are in a chemistry lab. Describe the visual appearance changes during this reaction: {reaction}. 
+The reaction takes place in a standard glass beaker at room temperature and atmospheric pressure.
+Each chemical is in its typical state (solid, liquid, gas) at room temperature unless otherwise specified, 
+crystalline solids are in aqueous solution form unless otherwise specified.
+If there are no changes in a particular characteristic, indicate "no change" for that characteristic.
+All the color descriptions should be as short and specific as possible.
 
 Return as JSON with this structure:
 {{
@@ -24,3 +28,5 @@ Return as JSON with this structure:
     "timing": "string",
     "special_effects": ["array of effects"]
 }}
+
+Respond only with the JSON structure, without any additional text.
