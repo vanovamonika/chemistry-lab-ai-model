@@ -43,10 +43,6 @@ def main():
                        default='',
                        help='SMILES string of reagents')
     
-    # Optional arguments
-    parser.add_argument('--model', '-m',
-                       default='sagawa/ReactionTransformer',
-                       help='Hugging Face model to use')
     
     parser.add_argument('--temperature', '-t',
                        type=float,
