@@ -47,11 +47,11 @@ def main():
     parser.add_argument('--temperature', '-t',
                        type=float,
                        default=20.0,
-                       help='Sampling temperature')
+                       help='Temperature of the reaction in Celsius')
     
     parser.add_argument('--conditions', '-c',
                        type=str,
-                       default='aqueous solution, room temperature',
+                       default='',
                        help='Chemical reaction conditions description')
     
     parser.add_argument('--type',

@@ -1,29 +1,20 @@
-# Langchain RAG Tutorial
+# AI model for predicting results of chemical reactions
 
 ## Install dependencies
 
-1. Do the following before installing the dependencies found in `requirements.txt` file because of current challenges installing `onnxruntime` through `pip install onnxruntime`. 
+1. Do the following before installing the dependencies found in `requirements.txt` file:
 
-    - For MacOS users, a workaround is to first install `onnxruntime` dependency for `chromadb` using:
-
-    ```python
-     conda install onnxruntime -c conda-forge
-    ```
-    See this [thread](https://github.com/microsoft/onnxruntime/issues/11037) for additonal help if needed. 
-
-     - For Windows users, follow the guide [here](https://github.com/bycloudai/InstallVSBuildToolsWindows?tab=readme-ov-file) to install the Microsoft C++ Build Tools. Be sure to follow through to the last step to set the enviroment variable path.
-
+```python
+pip install --upgrade pip
+pip install virtualenv
+virtualenv venv
+source venv/bin/activate  # On Windows use `venv\Scripts\activate`
+```
 
 2. Now run this command to install dependenies in the `requirements.txt` file. 
 
 ```python
 pip install -r requirements.txt
-```
-
-3. Install markdown depenendies with: 
-
-```python
-pip install "unstructured[md]"
 ```
 
 ## Create database
@@ -34,14 +25,22 @@ Create the Chroma DB.
 python create_database.py
 ```
 
-## Query the database
+## Run reaction prediction
 
-Query the Chroma DB.
+Run the main script with defined reactants, reaction type (organic/inorganic) and optional parameters describing the reaction conditions.
+For organic reactions it is necessary to define the input format of the reactants (smiles/names, default: smiles).
 
+- organic reaction example:
 ```python
-python query_data.py "How does Alice meet the Mad Hatter?"
+python main.py --reactants "reactant_name_1 + reactant_name_2" --format "names" --type "organic" [optional_parameters]
 ```
 
-> You'll also need to set up an OpenAI account (and set the OpenAI key in your environment variable) for this to work.
+- inorganic reaction example:
+```python
+python main.py --reactants "reactant_smiles_1 + reactant_smiles_2" --type "inorganic" [optional_parameters]
+```
 
-Here is a step-by-step tutorial video: [RAG+Langchain Python Project: Easy AI/Chat For Your Docs](https://www.youtube.com/watch?v=tcqEUSNCn8I&ab_channel=pixegami).
+optional parameters are following:
+- --reagents: Reagents used in the reaction (default: None)
+- --temperature: Temperature of the reaction in Celsius (default 20)
+- --conditions: Chemical reaction conditions description (default: None)
