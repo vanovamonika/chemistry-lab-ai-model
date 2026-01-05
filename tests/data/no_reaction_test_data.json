@@ -1,0 +1,48 @@
+[
+  {
+    "id": "no_rxn_01",
+    "name": "Sodium chloride + Potassium nitrate",
+    "reactants": "sodium chloride, potassium nitrate",
+    "reagents": "",
+    "conditions": "aqueous solution",
+    "temperature": 25.0,
+    "reaction_type": "inorganic",
+    "input_format": "names",
+    "expected": {
+      "products": ["no reaction"],
+      "must_contain": ["no reaction"],
+      "must_not_contain": ["precipitate", "gas", "NaNO₃", "KCl"],
+      "equation": "No reaction"
+    },
+    "visual_expectations": {
+      "features": ["no_change"],
+      "bubbles": false,
+      "precipitation": false,
+      "color_change": false
+    },
+    "notes": "All products soluble - no reaction occurs"
+  },
+  {
+    "id": "no_rxn_02",
+    "name": "Gold + Hydrochloric acid",
+    "reactants": "gold, hydrochloric acid",
+    "reagents": "",
+    "conditions": "aqueous acid",
+    "temperature": 25.0,
+    "reaction_type": "inorganic",
+    "input_format": "names",
+    "expected": {
+      "products": ["no reaction"],
+      "must_contain": ["no reaction"],
+      "must_not_contain": ["AuCl₃", "H₂"],
+      "equation": "No reaction"
+    },
+    "visual_expectations": {
+      "features": ["no_change"],
+      "bubbles": false,
+      "precipitation": false,
+      "color_change": false
+    },
+    "notes": "Noble metal doesn't react with HCl"
+  }
+]

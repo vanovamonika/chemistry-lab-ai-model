@@ -1,0 +1,86 @@
+{
+  "source_file": "data/reaction_test_data.txt",
+  "total_reactions": 10,
+  "reactions": [
+    {
+      "id": "reaction_1",
+      "reactants": "C(=O)(OC(C)(C)C)OC(=O)OC(C)(C)C.NC=1C=CC(=NC1)C(C#N)(C)C",
+      "reagents": "O.O1CCOCC1",
+      "products": "C(#N)C(C)(C)C1=CC=C(C=N1)NC(OC(C)(C)C)=O",
+      "reactant_count": 2,
+      "product_count": 1
+    },
+    {
+      "id": "reaction_2",
+      "reactants": "BrC1=CC=C(C=C1)CBr.C(#N)C(C)(C)C1=CC=C(C=N1)NC(OC(C)(C)C)=O",
+      "reagents": "N(C)(C)C=O.[H-].[Na+].[Cl-].[NH4+]",
+      "products": "BrC1=CC=C(CN(C(OC(C)(C)C)=O)C=2C=NC(=CC2)C(C)(C)C#N)C=C1",
+      "reactant_count": 2,
+      "product_count": 1
+    },
+    {
+      "id": "reaction_3",
+      "reactants": "BrC1=CC=C(CN(C(OC(C)(C)C)=O)C=2C=NC(=CC2)C(C)(C)C#N)C=C1",
+      "reagents": "CS(=O)C.B1(OC(C(O1)(C)C)(C)C)B2OC(C(O2)(C)C)(C)C.C1=CC=C(C=C1)P([C-]2C=CC=C2)C3=CC=CC=C3.C1=CC=C(C=C1)P([C-]2C=CC=C2)C3=CC=CC=C3.Cl[Pd]Cl.[Fe+2].C(C)(=O)[O-].[K+].C(CN(CC(=O)O)CC(=O)O)N(CC(=O)O)CC(=O)O",
+      "products": "C(#N)C(C)(C)C1=CC=C(C=N1)N(C(OC(C)(C)C)=O)CC1=CC=C(C=C1)B1OC(C(O1)(C)C)(C)C",
+      "reactant_count": 1,
+      "product_count": 1
+    },
+    {
+      "id": "reaction_4",
+      "reactants": "C(#N)C(C)(C)C1=CC=C(C=N1)N(C(OC(C)(C)C)=O)CC1=CC=C(C=C1)B1OC(C(O1)(C)C)(C)C.IC=1N(C2=CC=CC(=C2C1)NC1CCS(CC1)(=O)=O)CC(F)(F)F",
+      "reagents": "O.O1CCOCC1.c1ccc(cc1)[P](c2ccccc2)(c3ccccc3)[Pd]([P](c4ccccc4)(c5ccccc5)c6ccccc6)([P](c7ccccc7)(c8ccccc8)c9ccccc9)[P](c1ccccc1)(c1ccccc1)c1ccccc1.C(=O)([O-])[O-].[Cs+].[Cs+].C(CN(CC(=O)O)CC(=O)O)N(CC(=O)O)CC(=O)O",
+      "products": "C(#N)C(C)(C)C1=CC=C(C=N1)N(C(OC(C)(C)C)=O)CC1=CC=C(C=C1)C=1N(C2=CC=CC(=C2C1)NC1CCS(CC1)(=O)=O)CC(F)(F)F",
+      "reactant_count": 2,
+      "product_count": 1
+    },
+    {
+      "id": "reaction_5",
+      "reactants": "C(=O)C1=CC=C(C=C1)B(O)O.IC=1N(C=2C=CC=C(C2C1)NC1CCN(CC1)C1CCOCC1)CC(F)(F)F",
+      "reagents": "O.O1CCOCC1.c1ccc(cc1)[P](c2ccccc2)(c3ccccc3)[Pd]([P](c4ccccc4)(c5ccccc5)c6ccccc6)([P](c7ccccc7)(c8ccccc8)c9ccccc9)[P](c1ccccc1)(c1ccccc1)c1ccccc1.C(=O)([O-])[O-].[Cs+].[Cs+].C(CN(CC(=O)O)CC(=O)O)N(CC(=O)O)CC(=O)O",
+      "products": "O1CCC(CC1)N1CCC(CC1)NC1=C2C=C(N(C2=CC=C1)CC(F)(F)F)C1=CC=C(C=O)C=C1",
+      "reactant_count": 2,
+      "product_count": 1
+    },
+    {
+      "id": "reaction_6",
+      "reactants": "C(=O)C1=CC=C(C=C1)B(O)O.IC=1N(C=2C=CC=C(C2C1)NC1CCN(CC1)C)CC(F)(F)F",
+      "reagents": "O.O1CCOCC1.C([O-])([O-])=O.[Na+].[Na+].C1=CC=C(C=C1)P([C-]2C=CC=C2)C3=CC=CC=C3.C1=CC=C(C=C1)P([C-]2C=CC=C2)C3=CC=CC=C3.Cl[Pd]Cl.[Fe+2].C(CN(CC(=O)O)CC(=O)O)N(CC(=O)O)CC(=O)O",
+      "products": "CN1CCC(CC1)NC1=C2C=C(N(C2=CC=C1)CC(F)(F)F)C1=CC=C(C=O)C=C1",
+      "reactant_count": 2,
+      "product_count": 1
+    },
+    {
+      "id": "reaction_7",
+      "reactants": "C[Si](C)(C)Cl.C(C)(C)(C)OC(=O)N1CC(C(CC1)=O)F.Cl.IC=1N(C=2C=CC=C(C2C1)N)CC(F)(F)F",
+      "reagents": "N(C)(C)C=O.C([O-])([O-])=O.[Na+].[Na+].B.C1CCOC1",
+      "products": "F[C@@H]1CN(CC[C@@H]1NC1=C2C=C(N(C2=CC=C1)CC(F)(F)F)I)C(=O)OC(C)(C)C",
+      "reactant_count": 4,
+      "product_count": 1
+    },
+    {
+      "id": "reaction_8",
+      "reactants": "F[C@@H]1CN(CC[C@@H]1NC1=C2C=C(N(C2=CC=C1)CC(F)(F)F)I)C(=O)OC(C)(C)C",
+      "reagents": "ClCCl.C(=O)(C(F)(F)F)O.C([O-])([O-])=O.[Na+].[Na+]",
+      "products": "F[C@@H]1CNCC[C@@H]1NC=1C=2C=C(N(C2C=CC1)CC(F)(F)F)I",
+      "reactant_count": 1,
+      "product_count": 1
+    },
+    {
+      "id": "reaction_9",
+      "reactants": "F[C@@H]1CNCC[C@@H]1NC=1C=2C=C(N(C2C=CC1)CC(F)(F)F)I",
+      "reagents": "CO[H].C=O.C(C)(=O)O.C(#N)[BH3-].[Na+]",
+      "products": "F[C@@H]1CN(CC[C@@H]1NC=1C=2C=C(N(C2C=CC1)CC(F)(F)F)I)C",
+      "reactant_count": 1,
+      "product_count": 1
+    },
+    {
+      "id": "reaction_10",
+      "reactants": "CN1CCC(CC1)=O.IC=1N(C=2C=CC=C(C2C1)N)CC(F)(F)F",
+      "reagents": "CCO[H].[O-]CC.[Ti+4].[O-]CC.[O-]CC.[O-]CC.C(O)([O-])=O.[Na+].C(#N)[BH3-].[Na+]",
+      "products": "IC=1N(C=2C=CC=C(C2C1)NC1CCN(CC1)C)CC(F)(F)F",
+      "reactant_count": 2,
+      "product_count": 1
+    }
+  ]
+}

@@ -1,0 +1,428 @@
+[
+  {
+  "id": "williamson_ether_01",
+  "name": "Sodium ethoxide + Methyl iodide",
+  "reactants": "[Na+]CCO.CI",
+  "reagents": "",
+  "conditions": "SN2 conditions, dry",
+  "temperature": 25.0,
+  "reaction_type": "organic",
+  "input_format": "smiles",
+  "expected": {
+    "products": ["COCC", "NaI"],
+    "must_contain": ["COCC"],
+    "must_not_contain": ["[Na+]CCO", "CI"],
+    "equation": "C₂H₅ONa + CH₃I → CH₃OC₂H₅ + NaI"
+  },
+  "visual_expectations": {
+    "features": ["formation_of_salt"],
+    "bubbles": false,
+    "precipitation": true,
+    "color_change": false
+  },
+  "notes": "Williamson ether synthesis to methyl ethyl ether"
+},
+
+{
+  "id": "grignard_01",
+  "name": "Methylmagnesium bromide + Formaldehyde",
+  "reactants": "C[Mg]Br.C=O",
+  "reagents": "Et₂O",
+  "conditions": "dry ether, 0°C",
+  "temperature": 0.0,
+  "reaction_type": "organic",
+  "input_format": "smiles",
+  "expected": {
+    "products": ["CCO[Mg]Br", "CC(O)[Mg]Br", "CCO"],
+    "must_contain": ["CCO"],
+    "must_not_contain": ["C=O"],
+    "equation": "CH₃MgBr + HCHO → CH₃CH₂OH after acidic workup"
+  },
+  "visual_expectations": {
+    "features": ["vigorous_reaction", "gas_evolution"],
+    "bubbles": true,
+    "precipitation": false,
+    "color_change": false
+  },
+  "notes": "Grignard reaction to ethanol after workup"
+},
+
+{
+  "id": "friedel_crafts_01",
+  "name": "Benzene + Acetyl chloride",
+  "reactants": "c1ccccc1.CC(=O)Cl",
+  "reagents": "AlCl3",
+  "conditions": "anhydrous conditions",
+  "temperature": 25.0,
+  "reaction_type": "organic",
+  "input_format": "smiles",
+  "expected": {
+    "products": ["CC(=O)c1ccccc1", "HCl"],
+    "must_contain": ["CC(=O)c1ccccc1"],
+    "must_not_contain": ["CC(=O)Cl"],
+    "equation": "C₆H₆ + CH₃COCl → C₆H₅COCH₃ + HCl"
+  },
+  "visual_expectations": {
+    "features": ["HCl_gas"],
+    "bubbles": true,
+    "precipitation": false,
+    "color_change": false
+  },
+  "notes": "Friedel-Crafts acylation to acetophenone"
+},
+
+{
+  "id": "diels_alder_01",
+  "name": "Butadiene + Ethylene",
+  "reactants": "C=CC=C.C=C",
+  "reagents": "",
+  "conditions": "heat, pressure",
+  "temperature": 200.0,
+  "reaction_type": "organic",
+  "input_format": "smiles",
+  "expected": {
+    "products": ["C1CC=CCC1"],
+    "must_contain": ["C1CC=CCC1"],
+    "must_not_contain": ["C=CC=C", "C=C"],
+    "equation": "C₄H₆ + C₂H₄ → C₆H₁₀"
+  },
+  "visual_expectations": {
+    "features": ["cyclization"],
+    "bubbles": false,
+    "precipitation": false,
+    "color_change": false
+  },
+  "notes": "Diels-Alder reaction to cyclohexene"
+},
+
+{
+  "id": "aldo_condensation_01",
+  "name": "Acetaldehyde + Acetaldehyde",
+  "reactants": "CC=O.CC=O",
+  "reagents": "NaOH",
+  "conditions": "basic conditions",
+  "temperature": 25.0,
+  "reaction_type": "organic",
+  "input_format": "smiles",
+  "expected": {
+    "products": ["CC(=O)C=CC=O", "H2O"],
+    "must_contain": ["CC(=O)C=CC=O"],
+    "must_not_contain": ["CC=O"],
+    "equation": "2 CH₃CHO → CH₃CH=CHCHO + H₂O"
+  },
+  "visual_expectations": {
+    "features": ["yellow_precipitate"],
+    "bubbles": false,
+    "precipitation": true,
+    "color_change": true
+  },
+  "notes": "Aldol condensation to crotonaldehyde"
+},
+
+{
+  "id": "hydrogenation_01",
+  "name": "Ethylene + Hydrogen",
+  "reactants": "C=C",
+  "reagents": "H2",
+  "conditions": "Pt catalyst",
+  "temperature": 25.0,
+  "reaction_type": "organic",
+  "input_format": "smiles",
+  "expected": {
+    "products": ["CC"],
+    "must_contain": ["CC"],
+    "must_not_contain": ["C=C"],
+    "equation": "C₂H₄ + H₂ → C₂H₆"
+  },
+  "visual_expectations": {
+    "features": ["gas_consumption"],
+    "bubbles": false,
+    "precipitation": false,
+    "color_change": false
+  },
+  "notes": "Catalytic hydrogenation to ethane"
+},
+
+{
+  "id": "hydrolysis_01",
+  "name": "Ethyl acetate + Water",
+  "reactants": "CCOC(=O)C",
+  "reagents": "O",
+  "conditions": "acid or base catalyzed",
+  "temperature": 80.0,
+  "reaction_type": "organic",
+  "input_format": "smiles",
+  "expected": {
+    "products": ["CCO", "CC(=O)O"],
+    "must_contain": ["CCO", "CC(=O)O"],
+    "must_not_contain": ["CCOC(=O)C"],
+    "equation": "CH₃COOC₂H₅ + H₂O → CH₃COOH + C₂H₅OH"
+  },
+  "visual_expectations": {
+    "features": ["vinegar_odor"],
+    "bubbles": false,
+    "precipitation": false,
+    "color_change": false
+  },
+  "notes": "Hydrolysis of ester to acetic acid and ethanol"
+},
+
+{
+  "id": "bromination_01",
+  "name": "Cyclohexene + Bromine",
+  "reactants": "C1CC=CCC1",
+  "reagents": "BrBr",
+  "conditions": "dichloromethane solvent",
+  "temperature": 0.0,
+  "reaction_type": "organic",
+  "input_format": "smiles",
+  "expected": {
+    "products": ["BrC1CCCCC1Br"],
+    "must_contain": ["BrC1CCCCC1Br"],
+    "must_not_contain": ["BrBr"],
+    "equation": "C₆H₁₀ + Br₂ → C₆H₁₀Br₂"
+  },
+  "visual_expectations": {
+    "features": ["decolorization", "anti_addition"],
+    "bubbles": false,
+    "precipitation": false,
+    "color_change": true
+  },
+  "notes": "Bromination of cyclohexene (bromine color disappears)"
+},
+
+{
+  "id": "oxidation_01",
+  "name": "Ethanol + Dichromate",
+  "reactants": "CCO",
+  "reagents": "[O-][Cr](=O)(=O)O[Cr](=O)(=O)[O-].[K+]",
+  "conditions": "acidic conditions",
+  "temperature": 60.0,
+  "reaction_type": "organic",
+  "input_format": "smiles",
+  "expected": {
+    "products": ["CC=O", "Cr3+", "H2O"],
+    "must_contain": ["CC=O"],
+    "must_not_contain": ["CCO"],
+    "equation": "C₂H₅OH + [O] → CH₃CHO"
+  },
+  "visual_expectations": {
+    "features": ["orange_to_green", "aldehyde_odor"],
+    "bubbles": true,
+    "precipitation": false,
+    "color_change": true
+  },
+  "notes": "Oxidation of ethanol to acetaldehyde with potassium dichromate"
+},
+
+{
+  "id": "nitration_01",
+  "name": "Benzene + Nitric acid",
+  "reactants": "c1ccccc1",
+  "reagents": "O=[N+]([O-])O",
+  "conditions": "H2SO4 catalyst",
+  "temperature": 50.0,
+  "reaction_type": "organic",
+  "input_format": "smiles",
+  "expected": {
+    "products": ["O=[N+]([O-])c1ccccc1", "H2O"],
+    "must_contain": ["O=[N+]([O-])c1ccccc1"],
+    "must_not_contain": ["c1ccccc1"],
+    "equation": "C₆H₆ + HNO₃ → C₆H₅NO₂ + H₂O"
+  },
+  "visual_expectations": {
+    "features": ["yellow_oil"],
+    "bubbles": true,
+    "precipitation": false,
+    "color_change": true
+  },
+  "notes": "Nitration of benzene to nitrobenzene"
+},
+
+{
+  "id": "saponification_01",
+  "name": "Ethyl acetate + Sodium hydroxide",
+  "reactants": "CCOC(=O)C",
+  "reagents": "[Na+]O-",
+  "conditions": "aqueous conditions",
+  "temperature": 80.0,
+  "reaction_type": "organic",
+  "input_format": "smiles",
+  "expected": {
+    "products": ["CCO", "CC(=O)[O-].[Na+]"],
+    "must_contain": ["CC(=O)[O-]"],
+    "must_not_contain": ["CCOC(=O)C"],
+    "equation": "CH₃COOC₂H₅ + NaOH → CH₃COONa + C₂H₅OH"
+  },
+  "visual_expectations": {
+    "features": ["soapy_foam", "heat_generation"],
+    "bubbles": true,
+    "precipitation": false,
+    "color_change": false
+  },
+  "notes": "Base hydrolysis (saponification) to sodium acetate and ethanol"
+},
+
+{
+  "id": "wittig_01",
+  "name": "Benzaldehyde + Methylenetriphenylphosphorane",
+  "reactants": "O=Cc1ccccc1",
+  "reagents": "C=P(c1ccccc1)(c2ccccc2)c3ccccc3",
+  "conditions": "THF solvent",
+  "temperature": 25.0,
+  "reaction_type": "organic",
+  "input_format": "smiles",
+  "expected": {
+    "products": ["C=Cc1ccccc1", "O=P(c1ccccc1)(c2ccccc2)c3ccccc3"],
+    "must_contain": ["C=Cc1ccccc1"],
+    "must_not_contain": ["O=Cc1ccccc1"],
+    "equation": "C₆H₅CHO + Ph₃P=CH₂ → C₆H₅CH=CH₂ + Ph₃P=O"
+  },
+  "visual_expectations": {
+    "features": ["formation_of_phosphine_oxide"],
+    "bubbles": false,
+    "precipitation": true,
+    "color_change": false
+  },
+  "notes": "Wittig reaction to styrene"
+},
+
+{
+  "id": "hydroboration_01",
+  "name": "Propene + Borane",
+  "reactants": "CC=C",
+  "reagents": "B",
+  "conditions": "THF, then H2O2/OH-",
+  "temperature": 0.0,
+  "reaction_type": "organic",
+  "input_format": "smiles",
+  "expected": {
+    "products": ["CCCO", "B(OH)3"],
+    "must_contain": ["CCCO"],
+    "must_not_contain": ["CC=C"],
+    "equation": "CH₃CH=CH₂ + BH₃ → CH₃CH₂CH₂OH after oxidation"
+  },
+  "visual_expectations": {
+    "features": ["anti-markovnikov"],
+    "bubbles": true,
+    "precipitation": false,
+    "color_change": false
+  },
+  "notes": "Hydroboration-oxidation to propan-1-ol"
+},
+
+{
+  "id": "claisen_condensation_01",
+  "name": "Ethyl acetate + Ethyl acetate",
+  "reactants": "CCOC(=O)C.CCOC(=O)C",
+  "reagents": "[Na+]CCO",
+  "conditions": "base, then acidification",
+  "temperature": 25.0,
+  "reaction_type": "organic",
+  "input_format": "smiles",
+  "expected": {
+    "products": ["CC(=O)CC(=O)OCC", "CCO"],
+    "must_contain": ["CC(=O)CC(=O)OCC"],
+    "must_not_contain": ["CCOC(=O)C"],
+    "equation": "2 CH₃COOC₂H₅ → CH₃COCH₂COOC₂H₅ + C₂H₅OH"
+  },
+  "visual_expectations": {
+    "features": ["beta-keto_ester_formation"],
+    "bubbles": false,
+    "precipitation": false,
+    "color_change": false
+  },
+  "notes": "Claisen condensation to ethyl acetoacetate"
+},
+
+{
+  "id": "ozonolysis_01",
+  "name": "2-Butene + Ozone",
+  "reactants": "CC=CC",
+  "reagents": "[O-][O+]=O",
+  "conditions": "O3, then Zn/H+",
+  "temperature": -78.0,
+  "reaction_type": "organic",
+  "input_format": "smiles",
+  "expected": {
+    "products": ["CC=O", "O=CC"],
+    "must_contain": ["CC=O"],
+    "must_not_contain": ["CC=CC"],
+    "equation": "CH₃CH=CHCH₃ → 2 CH₃CHO"
+  },
+  "visual_expectations": {
+    "features": ["ozone_odor", "cleavage"],
+    "bubbles": true,
+    "precipitation": false,
+    "color_change": false
+  },
+  "notes": "Ozonolysis to acetaldehyde"
+},
+  {
+  "id": "esterification_01",
+  "name": "Ethanol + Acetic acid",
+  "reactants": "CCO.CC(=O)O",
+  "reagents": "H2SO4",
+  "conditions": "acid catalyst, heat",
+  "temperature": 80.0,
+  "reaction_type": "organic",
+  "input_format": "smiles",
+  "expected": {
+    "products": ["CCOC(=O)C", "H₂O"],
+    "must_contain": ["CCOC(=O)C"],
+    "must_not_contain": ["CCO", "CC(=O)O"],
+    "equation": "C₂H₅OH + CH₃COOH → CH₃COOC₂H₅ + H₂O"
+  },
+  "visual_expectations": {
+    "features": ["fruity_odor", "layers"],
+    "bubbles": false,
+    "precipitation": false,
+    "color_change": false
+  },
+  "notes": "Fischer esterification to ethyl acetate"
+},
+{
+    "id": "hydrolysis_01",
+    "name": "Ethyl acetate hydrolysis",
+    "reactants": "CCOC(=O)C",
+    "reagents": "O",
+    "conditions": "acid or base, heat",
+    "temperature": 60.0,
+    "reaction_type": "organic",
+    "input_format": "smiles",
+    "expected": {
+      "products": ["CCO", "CC(=O)O"],
+      "must_contain": ["CCO", "CC(=O)O"],
+      "must_not_contain": ["CCOC(=O)C"],
+      "equation": "CH₃COOC₂H₅ + H₂O → CH₃COOH + C₂H₅OH"
+    },
+    "visual_expectations": {
+      "features": [],
+      "bubbles": false,
+      "precipitation": false,
+      "color_change": false
+    },
+    "notes": "Ester hydrolysis to alcohol and acid"
+  },
+  {
+    "reactants": ["C=C", "Br2"],
+    "reagents": "",
+    "conditions": "",
+    "temperature": 20.0,
+    "reaction_type": "organic",
+    "input_format": "smiles",
+    "expected": {
+      "products": ["BrCCBr"],
+      "must_contain": ["BrCCBr"],
+      "must_not_contain": ["C=C", "Br2"],
+      "equation": "C₂H₄ + Br₂ -> C₂H₄Br₂"
+    },
+    "visual_expectations": {
+      "features": ["color_loss", "decolorization"],
+      "bubbles": false,
+      "precipitation": false,
+      "color_change": true
+    },
+    "notes": "Bromine addition to alkene - bromine color disappears"
+  }
+]

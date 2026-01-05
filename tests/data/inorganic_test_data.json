@@ -1,0 +1,117 @@
+[
+  {
+    "id": "acid_base_01",
+    "name": "Sodium hydroxide + Hydrochloric acid",
+    "reactants": "sodium hydroxide, hydrochloric acid",
+    "reagents": "",
+    "conditions": "aqueous solution",
+    "temperature": 20.0,
+    "reaction_type": "inorganic",
+    "input_format": "names",
+    "expected": {
+      "products": ["sodium chloride", "water"],
+      "must_contain": ["NaCl", "H₂O"],
+      "must_not_contain": ["gas", "precipitate"],
+      "equation": "NaOH(aq) + HCl(aq) → NaCl(aq) + H₂O(l)"
+    },
+    "visual_expectations": {
+      "features": ["colorless", "exothermic"],
+      "bubbles": false,
+      "precipitation": false,
+      "color_change": false
+    },
+    "notes": "Strong acid-strong base neutralization"
+  },
+  {
+    "id": "precip_01",
+    "name": "Silver nitrate + Sodium chloride",
+    "reactants": "silver nitrate, sodium chloride",
+    "reagents": "",
+    "conditions": "aqueous solution",
+    "temperature": 20.0,
+    "reaction_type": "inorganic",
+    "input_format": "names",
+    "expected": {
+      "products": ["silver chloride", "sodium nitrate"],
+      "must_contain": ["AgCl"],
+      "must_not_contain": ["AgNO₃", "NaCl"],
+      "equation": "AgNO₃(aq) + NaCl(aq) → AgCl(s) + NaNO₃(aq)"
+    },
+    "visual_expectations": {
+      "features": ["white_precipitate", "cloudy"],
+      "bubbles": false,
+      "precipitation": true,
+      "color_change": true
+    },
+    "notes": "Silver chloride precipitation"
+  },
+  {
+    "id": "metal_acid_01",
+    "name": "Zinc + Hydrochloric acid",
+    "reactants": "zinc, hydrochloric acid",
+    "reagents": "",
+    "conditions": "dilute acid",
+    "temperature": 20.0,
+    "reaction_type": "inorganic",
+    "input_format": "names",
+    "expected": {
+      "products": ["zinc chloride", "hydrogen gas"],
+      "must_contain": ["ZnCl₂", "H₂"],
+      "must_not_contain": [],
+      "equation": "Zn(s) + 2HCl(aq) → ZnCl₂(aq) + H₂(g)"
+    },
+    "visual_expectations": {
+      "features": ["bubbles", "effervescence"],
+      "bubbles": true,
+      "precipitation": false,
+      "color_change": false
+    },
+    "notes": "Active metal with acid produces hydrogen"
+  },
+  {
+    "id": "gas_01",
+    "name": "Calcium carbonate + Hydrochloric acid",
+    "reactants": "calcium carbonate, hydrochloric acid",
+    "reagents": "",
+    "conditions": "aqueous acid",
+    "temperature": 20.0,
+    "reaction_type": "inorganic",
+    "input_format": "names",
+    "expected": {
+      "products": ["calcium chloride", "carbon dioxide", "water"],
+      "must_contain": ["CaCl₂", "CO₂", "H₂O"],
+      "must_not_contain": [],
+      "equation": "CaCO₃(s) + 2HCl(aq) → CaCl₂(aq) + CO₂(g) + H₂O(l)"
+    },
+    "visual_expectations": {
+      "features": ["bubbles", "effervescence"],
+      "bubbles": true,
+      "precipitation": false,
+      "color_change": false
+    },
+    "notes": "Carbonate with acid produces CO₂"
+  },
+  {
+    "id": "combustion_01",
+    "name": "Methane combustion",
+    "reactants": "methane, oxygen",
+    "reagents": "",
+    "conditions": "ignition",
+    "temperature": 500.0,
+    "reaction_type": "inorganic",
+    "input_format": "names",
+    "expected": {
+      "products": ["carbon dioxide", "water"],
+      "must_contain": ["CO₂", "H₂O"],
+      "must_not_contain": ["methane", "oxygen"],
+      "equation": "CH₄(g) + 2O₂(g) → CO₂(g) + 2H₂O(g)"
+    },
+    "visual_expectations": {
+      "features": ["flame", "heat", "light"],
+      "bubbles": false,
+      "precipitation": false,
+      "color_change": true
+    },
+    "notes": "Complete combustion of methane"
+  }
+]

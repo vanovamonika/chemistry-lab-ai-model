@@ -1,0 +1,501 @@
+{
+  "source_file": "data/reaction_test_data.txt",
+  "total_reactions": 10,
+  "reactions": [
+    {
+      "id": "reaction_1",
+      "reactants": {
+        "smiles": "C(=O)(OC(C)(C)C)OC(=O)OC(C)(C)C.NC=1C=CC(=NC1)C(C#N)(C)C",
+        "compounds": [
+          "C(=O)(OC(C)(C)C)OC(=O)OC(C)(C)C",
+          "NC=1C=CC(=NC1)C(C#N)(C)C"
+        ],
+        "count": 2
+      },
+      "reagents": {
+        "smiles": "O.O1CCOCC1",
+        "compounds": [
+          "O",
+          "O1CCOCC1"
+        ],
+        "count": 2
+      },
+      "products": {
+        "smiles": "C(#N)C(C)(C)C1=CC=C(C=N1)NC(OC(C)(C)C)=O",
+        "compounds": [
+          "C(#N)C(C)(C)C1=CC=C(C=N1)NC(OC(C)(C)C)=O"
+        ],
+        "count": 1
+      },
+      "metadata": {
+        "total_atoms": 53,
+        "atom_types": {
+          "C": 37,
+          "O": 10,
+          "N": 6
+        },
+        "estimated_mw": 688.43,
+        "has_reagents": true,
+        "reactant_count": 2,
+        "product_count": 1
+      },
+      "original_format": "C(=O)(OC(C)(C)C)OC(=O)OC(C)(C)C.NC=1C=CC(=NC1)C(C#N)(C)C>O.O1CCOCC1>C(#N)C(C)(C)C1=CC=C(C=N1)NC(OC(C)(C)C)=O"
+    },
+    {
+      "id": "reaction_2",
+      "reactants": {
+        "smiles": "BrC1=CC=C(C=C1)CBr.C(#N)C(C)(C)C1=CC=C(C=N1)NC(OC(C)(C)C)=O",
+        "compounds": [
+          "BrC1=CC=C(C=C1)CBr",
+          "C(#N)C(C)(C)C1=CC=C(C=N1)NC(OC(C)(C)C)=O"
+        ],
+        "count": 2
+      },
+      "reagents": {
+        "smiles": "N(C)(C)C=O.[H-].[Na+].[Cl-].[NH4+]",
+        "compounds": [
+          "N(C)(C)C=O",
+          "[H-]",
+          "[Na+]",
+          "[Cl-]",
+          "[NH4+]"
+        ],
+        "count": 5
+      },
+      "products": {
+        "smiles": "BrC1=CC=C(CN(C(OC(C)(C)C)=O)C=2C=NC(=CC2)C(C)(C)C#N)C=C1",
+        "compounds": [
+          "BrC1=CC=C(CN(C(OC(C)(C)C)=O)C=2C=NC(=CC2)C(C)(C)C#N)C=C1"
+        ],
+        "count": 1
+      },
+      "metadata": {
+        "total_atoms": 65,
+        "atom_types": {
+          "Br": 3,
+          "C": 45,
+          "N": 8,
+          "O": 5,
+          "H": 2,
+          "Na": 1,
+          "Cl": 1
+        },
+        "estimated_mw": 1021.7,
+        "has_reagents": true,
+        "reactant_count": 2,
+        "product_count": 1
+      },
+      "original_format": "BrC1=CC=C(C=C1)CBr.C(#N)C(C)(C)C1=CC=C(C=N1)NC(OC(C)(C)C)=O>N(C)(C)C=O.[H-].[Na+].[Cl-].[NH4+]>BrC1=CC=C(CN(C(OC(C)(C)C)=O)C=2C=NC(=CC2)C(C)(C)C#N)C=C1"
+    },
+    {
+      "id": "reaction_3",
+      "reactants": {
+        "smiles": "BrC1=CC=C(CN(C(OC(C)(C)C)=O)C=2C=NC(=CC2)C(C)(C)C#N)C=C1",
+        "compounds": [
+          "BrC1=CC=C(CN(C(OC(C)(C)C)=O)C=2C=NC(=CC2)C(C)(C)C#N)C=C1"
+        ],
+        "count": 1
+      },
+      "reagents": {
+        "smiles": "CS(=O)C.B1(OC(C(O1)(C)C)(C)C)B2OC(C(O2)(C)C)(C)C.C1=CC=C(C=C1)P([C-]2C=CC=C2)C3=CC=CC=C3.C1=CC=C(C=C1)P([C-]2C=CC=C2)C3=CC=CC=C3.Cl[Pd]Cl.[Fe+2].C(C)(=O)[O-].[K+].C(CN(CC(=O)O)CC(=O)O)N(CC(=O)O)CC(=O)O",
+        "compounds": [
+          "CS(=O)C",
+          "B1(OC(C(O1)(C)C)(C)C)B2OC(C(O2)(C)C)(C)C",
+          "C1=CC=C(C=C1)P([C-]2C=CC=C2)C3=CC=CC=C3",
+          "C1=CC=C(C=C1)P([C-]2C=CC=C2)C3=CC=CC=C3",
+          "Cl[Pd]Cl",
+          "[Fe+2]",
+          "C(C)(=O)[O-]",
+          "[K+]",
+          "C(CN(CC(=O)O)CC(=O)O)N(CC(=O)O)CC(=O)O"
+        ],
+        "count": 9
+      },
+      "products": {
+        "smiles": "C(#N)C(C)(C)C1=CC=C(C=N1)N(C(OC(C)(C)C)=O)CC1=CC=C(C=C1)B1OC(C(O1)(C)C)(C)C",
+        "compounds": [
+          "C(#N)C(C)(C)C1=CC=C(C=N1)N(C(OC(C)(C)C)=O)CC1=CC=C(C=C1)B1OC(C(O1)(C)C)(C)C"
+        ],
+        "count": 1
+      },
+      "metadata": {
+        "total_atoms": 149,
+        "atom_types": {
+          "Br": 1,
+          "C": 108,
+          "N": 8,
+          "O": 21,
+          "S": 1,
+          "B": 3,
+          "P": 2,
+          "Cl": 2,
+          "Pd": 1,
+          "Fe": 1,
+          "K": 1
+        },
+        "estimated_mw": 2061.96,
+        "has_reagents": true,
+        "reactant_count": 1,
+        "product_count": 1
+      },
+      "original_format": "BrC1=CC=C(CN(C(OC(C)(C)C)=O)C=2C=NC(=CC2)C(C)(C)C#N)C=C1>CS(=O)C.B1(OC(C(O1)(C)C)(C)C)B2OC(C(O2)(C)C)(C)C.C1=CC=C(C=C1)P([C-]2C=CC=C2)C3=CC=CC=C3.C1=CC=C(C=C1)P([C-]2C=CC=C2)C3=CC=CC=C3.Cl[Pd]Cl.[Fe+2].C(C)(=O)[O-].[K+].C(CN(CC(=O)O)CC(=O)O)N(CC(=O)O)CC(=O)O>C(#N)C(C)(C)C1=CC=C(C=N1)N(C(OC(C)(C)C)=O)CC1=CC=C(C=C1)B1OC(C(O1)(C)C)(C)C"
+    },
+    {
+      "id": "reaction_4",
+      "reactants": {
+        "smiles": "C(#N)C(C)(C)C1=CC=C(C=N1)N(C(OC(C)(C)C)=O)CC1=CC=C(C=C1)B1OC(C(O1)(C)C)(C)C.IC=1N(C2=CC=CC(=C2C1)NC1CCS(CC1)(=O)=O)CC(F)(F)F",
+        "compounds": [
+          "C(#N)C(C)(C)C1=CC=C(C=N1)N(C(OC(C)(C)C)=O)CC1=CC=C(C=C1)B1OC(C(O1)(C)C)(C)C",
+          "IC=1N(C2=CC=CC(=C2C1)NC1CCS(CC1)(=O)=O)CC(F)(F)F"
+        ],
+        "count": 2
+      },
+      "reagents": {
+        "smiles": "O.O1CCOCC1.c1ccc(cc1)[P](c2ccccc2)(c3ccccc3)[Pd]([P](c4ccccc4)(c5ccccc5)c6ccccc6)([P](c7ccccc7)(c8ccccc8)c9ccccc9)[P](c1ccccc1)(c1ccccc1)c1ccccc1.C(=O)([O-])[O-].[Cs+].[Cs+].C(CN(CC(=O)O)CC(=O)O)N(CC(=O)O)CC(=O)O",
+        "compounds": [
+          "O",
+          "O1CCOCC1",
+          "c1ccc(cc1)[P](c2ccccc2)(c3ccccc3)[Pd]([P](c4ccccc4)(c5ccccc5)c6ccccc6)([P](c7ccccc7)(c8ccccc8)c9ccccc9)[P](c1ccccc1)(c1ccccc1)c1ccccc1",
+          "C(=O)([O-])[O-]",
+          "[Cs+]",
+          "[Cs+]",
+          "C(CN(CC(=O)O)CC(=O)O)N(CC(=O)O)CC(=O)O"
+        ],
+        "count": 7
+      },
+      "products": {
+        "smiles": "C(#N)C(C)(C)C1=CC=C(C=N1)N(C(OC(C)(C)C)=O)CC1=CC=C(C=C1)C=1N(C2=CC=CC(=C2C1)NC1CCS(CC1)(=O)=O)CC(F)(F)F",
+        "compounds": [
+          "C(#N)C(C)(C)C1=CC=C(C=N1)N(C(OC(C)(C)C)=O)CC1=CC=C(C=C1)C=1N(C2=CC=CC(=C2C1)NC1CCS(CC1)(=O)=O)CC(F)(F)F"
+        ],
+        "count": 1
+      },
+      "metadata": {
+        "total_atoms": 146,
+        "atom_types": {
+          "C": 92,
+          "N": 12,
+          "O": 24,
+          "B": 1,
+          "I": 1,
+          "S": 2,
+          "F": 6,
+          "Ccccccc": 1,
+          "Pcccccccccccc": 1,
+          "Pd": 1,
+          "Pcccccccccccccccccc": 3,
+          "Cs": 2
+        },
+        "estimated_mw": 2070.06,
+        "has_reagents": true,
+        "reactant_count": 2,
+        "product_count": 1
+      },
+      "original_format": "C(#N)C(C)(C)C1=CC=C(C=N1)N(C(OC(C)(C)C)=O)CC1=CC=C(C=C1)B1OC(C(O1)(C)C)(C)C.IC=1N(C2=CC=CC(=C2C1)NC1CCS(CC1)(=O)=O)CC(F)(F)F>O.O1CCOCC1.c1ccc(cc1)[P](c2ccccc2)(c3ccccc3)[Pd]([P](c4ccccc4)(c5ccccc5)c6ccccc6)([P](c7ccccc7)(c8ccccc8)c9ccccc9)[P](c1ccccc1)(c1ccccc1)c1ccccc1.C(=O)([O-])[O-].[Cs+].[Cs+].C(CN(CC(=O)O)CC(=O)O)N(CC(=O)O)CC(=O)O>C(#N)C(C)(C)C1=CC=C(C=N1)N(C(OC(C)(C)C)=O)CC1=CC=C(C=C1)C=1N(C2=CC=CC(=C2C1)NC1CCS(CC1)(=O)=O)CC(F)(F)F"
+    },
+    {
+      "id": "reaction_5",
+      "reactants": {
+        "smiles": "C(=O)C1=CC=C(C=C1)B(O)O.IC=1N(C=2C=CC=C(C2C1)NC1CCN(CC1)C1CCOCC1)CC(F)(F)F",
+        "compounds": [
+          "C(=O)C1=CC=C(C=C1)B(O)O",
+          "IC=1N(C=2C=CC=C(C2C1)NC1CCN(CC1)C1CCOCC1)CC(F)(F)F"
+        ],
+        "count": 2
+      },
+      "reagents": {
+        "smiles": "O.O1CCOCC1.c1ccc(cc1)[P](c2ccccc2)(c3ccccc3)[Pd]([P](c4ccccc4)(c5ccccc5)c6ccccc6)([P](c7ccccc7)(c8ccccc8)c9ccccc9)[P](c1ccccc1)(c1ccccc1)c1ccccc1.C(=O)([O-])[O-].[Cs+].[Cs+].C(CN(CC(=O)O)CC(=O)O)N(CC(=O)O)CC(=O)O",
+        "compounds": [
+          "O",
+          "O1CCOCC1",
+          "c1ccc(cc1)[P](c2ccccc2)(c3ccccc3)[Pd]([P](c4ccccc4)(c5ccccc5)c6ccccc6)([P](c7ccccc7)(c8ccccc8)c9ccccc9)[P](c1ccccc1)(c1ccccc1)c1ccccc1",
+          "C(=O)([O-])[O-]",
+          "[Cs+]",
+          "[Cs+]",
+          "C(CN(CC(=O)O)CC(=O)O)N(CC(=O)O)CC(=O)O"
+        ],
+        "count": 7
+      },
+      "products": {
+        "smiles": "O1CCC(CC1)N1CCC(CC1)NC1=C2C=C(N(C2=CC=C1)CC(F)(F)F)C1=CC=C(C=O)C=C1",
+        "compounds": [
+          "O1CCC(CC1)N1CCC(CC1)NC1=C2C=C(N(C2=CC=C1)CC(F)(F)F)C1=CC=C(C=O)C=C1"
+        ],
+        "count": 1
+      },
+      "metadata": {
+        "total_atoms": 112,
+        "atom_types": {
+          "C": 68,
+          "O": 20,
+          "B": 1,
+          "I": 1,
+          "N": 8,
+          "F": 6,
+          "Ccccccc": 1,
+          "Pcccccccccccc": 1,
+          "Pd": 1,
+          "Pcccccccccccccccccc": 3,
+          "Cs": 2
+        },
+        "estimated_mw": 1597.66,
+        "has_reagents": true,
+        "reactant_count": 2,
+        "product_count": 1
+      },
+      "original_format": "C(=O)C1=CC=C(C=C1)B(O)O.IC=1N(C=2C=CC=C(C2C1)NC1CCN(CC1)C1CCOCC1)CC(F)(F)F>O.O1CCOCC1.c1ccc(cc1)[P](c2ccccc2)(c3ccccc3)[Pd]([P](c4ccccc4)(c5ccccc5)c6ccccc6)([P](c7ccccc7)(c8ccccc8)c9ccccc9)[P](c1ccccc1)(c1ccccc1)c1ccccc1.C(=O)([O-])[O-].[Cs+].[Cs+].C(CN(CC(=O)O)CC(=O)O)N(CC(=O)O)CC(=O)O>O1CCC(CC1)N1CCC(CC1)NC1=C2C=C(N(C2=CC=C1)CC(F)(F)F)C1=CC=C(C=O)C=C1"
+    },
+    {
+      "id": "reaction_6",
+      "reactants": {
+        "smiles": "C(=O)C1=CC=C(C=C1)B(O)O.IC=1N(C=2C=CC=C(C2C1)NC1CCN(CC1)C)CC(F)(F)F",
+        "compounds": [
+          "C(=O)C1=CC=C(C=C1)B(O)O",
+          "IC=1N(C=2C=CC=C(C2C1)NC1CCN(CC1)C)CC(F)(F)F"
+        ],
+        "count": 2
+      },
+      "reagents": {
+        "smiles": "O.O1CCOCC1.C([O-])([O-])=O.[Na+].[Na+].C1=CC=C(C=C1)P([C-]2C=CC=C2)C3=CC=CC=C3.C1=CC=C(C=C1)P([C-]2C=CC=C2)C3=CC=CC=C3.Cl[Pd]Cl.[Fe+2].C(CN(CC(=O)O)CC(=O)O)N(CC(=O)O)CC(=O)O",
+        "compounds": [
+          "O",
+          "O1CCOCC1",
+          "C([O-])([O-])=O",
+          "[Na+]",
+          "[Na+]",
+          "C1=CC=C(C=C1)P([C-]2C=CC=C2)C3=CC=CC=C3",
+          "C1=CC=C(C=C1)P([C-]2C=CC=C2)C3=CC=CC=C3",
+          "Cl[Pd]Cl",
+          "[Fe+2]",
+          "C(CN(CC(=O)O)CC(=O)O)N(CC(=O)O)CC(=O)O"
+        ],
+        "count": 10
+      },
+      "products": {
+        "smiles": "CN1CCC(CC1)NC1=C2C=C(N(C2=CC=C1)CC(F)(F)F)C1=CC=C(C=O)C=C1",
+        "compounds": [
+          "CN1CCC(CC1)NC1=C2C=C(N(C2=CC=C1)CC(F)(F)F)C1=CC=C(C=O)C=C1"
+        ],
+        "count": 1
+      },
+      "metadata": {
+        "total_atoms": 137,
+        "atom_types": {
+          "C": 95,
+          "O": 18,
+          "B": 1,
+          "I": 1,
+          "N": 8,
+          "F": 6,
+          "Na": 2,
+          "P": 2,
+          "Cl": 2,
+          "Pd": 1,
+          "Fe": 1
+        },
+        "estimated_mw": 1974.77,
+        "has_reagents": true,
+        "reactant_count": 2,
+        "product_count": 1
+      },
+      "original_format": "C(=O)C1=CC=C(C=C1)B(O)O.IC=1N(C=2C=CC=C(C2C1)NC1CCN(CC1)C)CC(F)(F)F>O.O1CCOCC1.C([O-])([O-])=O.[Na+].[Na+].C1=CC=C(C=C1)P([C-]2C=CC=C2)C3=CC=CC=C3.C1=CC=C(C=C1)P([C-]2C=CC=C2)C3=CC=CC=C3.Cl[Pd]Cl.[Fe+2].C(CN(CC(=O)O)CC(=O)O)N(CC(=O)O)CC(=O)O>CN1CCC(CC1)NC1=C2C=C(N(C2=CC=C1)CC(F)(F)F)C1=CC=C(C=O)C=C1"
+    },
+    {
+      "id": "reaction_7",
+      "reactants": {
+        "smiles": "C[Si](C)(C)Cl.C(C)(C)(C)OC(=O)N1CC(C(CC1)=O)F.Cl.IC=1N(C=2C=CC=C(C2C1)N)CC(F)(F)F",
+        "compounds": [
+          "C[Si](C)(C)Cl",
+          "C(C)(C)(C)OC(=O)N1CC(C(CC1)=O)F",
+          "Cl",
+          "IC=1N(C=2C=CC=C(C2C1)N)CC(F)(F)F"
+        ],
+        "count": 4
+      },
+      "reagents": {
+        "smiles": "N(C)(C)C=O.C([O-])([O-])=O.[Na+].[Na+].B.C1CCOC1",
+        "compounds": [
+          "N(C)(C)C=O",
+          "C([O-])([O-])=O",
+          "[Na+]",
+          "[Na+]",
+          "B",
+          "C1CCOC1"
+        ],
+        "count": 6
+      },
+      "products": {
+        "smiles": "F[C@@H]1CN(CC[C@@H]1NC1=C2C=C(N(C2=CC=C1)CC(F)(F)F)I)C(=O)OC(C)(C)C",
+        "compounds": [
+          "F[C@@H]1CN(CC[C@@H]1NC1=C2C=C(N(C2=CC=C1)CC(F)(F)F)I)C(=O)OC(C)(C)C"
+        ],
+        "count": 1
+      },
+      "metadata": {
+        "total_atoms": 86,
+        "atom_types": {
+          "C": 51,
+          "Si": 1,
+          "Cl": 2,
+          "O": 10,
+          "N": 7,
+          "F": 8,
+          "I": 2,
+          "Na": 2,
+          "B": 1,
+          "H": 2
+        },
+        "estimated_mw": 1397.3,
+        "has_reagents": true,
+        "reactant_count": 4,
+        "product_count": 1
+      },
+      "original_format": "C[Si](C)(C)Cl.C(C)(C)(C)OC(=O)N1CC(C(CC1)=O)F.Cl.IC=1N(C=2C=CC=C(C2C1)N)CC(F)(F)F>N(C)(C)C=O.C([O-])([O-])=O.[Na+].[Na+].B.C1CCOC1>F[C@@H]1CN(CC[C@@H]1NC1=C2C=C(N(C2=CC=C1)CC(F)(F)F)I)C(=O)OC(C)(C)C"
+    },
+    {
+      "id": "reaction_8",
+      "reactants": {
+        "smiles": "F[C@@H]1CN(CC[C@@H]1NC1=C2C=C(N(C2=CC=C1)CC(F)(F)F)I)C(=O)OC(C)(C)C",
+        "compounds": [
+          "F[C@@H]1CN(CC[C@@H]1NC1=C2C=C(N(C2=CC=C1)CC(F)(F)F)I)C(=O)OC(C)(C)C"
+        ],
+        "count": 1
+      },
+      "reagents": {
+        "smiles": "ClCCl.C(=O)(C(F)(F)F)O.C([O-])([O-])=O.[Na+].[Na+]",
+        "compounds": [
+          "ClCCl",
+          "C(=O)(C(F)(F)F)O",
+          "C([O-])([O-])=O",
+          "[Na+]",
+          "[Na+]"
+        ],
+        "count": 5
+      },
+      "products": {
+        "smiles": "F[C@@H]1CNCC[C@@H]1NC=1C=2C=C(N(C2C=CC1)CC(F)(F)F)I",
+        "compounds": [
+          "F[C@@H]1CNCC[C@@H]1NC=1C=2C=C(N(C2C=CC1)CC(F)(F)F)I"
+        ],
+        "count": 1
+      },
+      "metadata": {
+        "total_atoms": 73,
+        "atom_types": {
+          "F": 11,
+          "C": 39,
+          "H": 4,
+          "N": 6,
+          "I": 2,
+          "O": 7,
+          "Cl": 2,
+          "Na": 2
+        },
+        "estimated_mw": 1226.19,
+        "has_reagents": true,
+        "reactant_count": 1,
+        "product_count": 1
+      },
+      "original_format": "F[C@@H]1CN(CC[C@@H]1NC1=C2C=C(N(C2=CC=C1)CC(F)(F)F)I)C(=O)OC(C)(C)C>ClCCl.C(=O)(C(F)(F)F)O.C([O-])([O-])=O.[Na+].[Na+]>F[C@@H]1CNCC[C@@H]1NC=1C=2C=C(N(C2C=CC1)CC(F)(F)F)I"
+    },
+    {
+      "id": "reaction_9",
+      "reactants": {
+        "smiles": "F[C@@H]1CNCC[C@@H]1NC=1C=2C=C(N(C2C=CC1)CC(F)(F)F)I",
+        "compounds": [
+          "F[C@@H]1CNCC[C@@H]1NC=1C=2C=C(N(C2C=CC1)CC(F)(F)F)I"
+        ],
+        "count": 1
+      },
+      "reagents": {
+        "smiles": "CO[H].C=O.C(C)(=O)O.C(#N)[BH3-].[Na+]",
+        "compounds": [
+          "CO[H]",
+          "C=O",
+          "C(C)(=O)O",
+          "C(#N)[BH3-]",
+          "[Na+]"
+        ],
+        "count": 5
+      },
+      "products": {
+        "smiles": "F[C@@H]1CN(CC[C@@H]1NC=1C=2C=C(N(C2C=CC1)CC(F)(F)F)I)C",
+        "compounds": [
+          "F[C@@H]1CN(CC[C@@H]1NC=1C=2C=C(N(C2C=CC1)CC(F)(F)F)I)C"
+        ],
+        "count": 1
+      },
+      "metadata": {
+        "total_atoms": 65,
+        "atom_types": {
+          "F": 8,
+          "C": 36,
+          "H": 6,
+          "N": 7,
+          "I": 2,
+          "O": 4,
+          "B": 1,
+          "Na": 1
+        },
+        "estimated_mw": 1030.29,
+        "has_reagents": true,
+        "reactant_count": 1,
+        "product_count": 1
+      },
+      "original_format": "F[C@@H]1CNCC[C@@H]1NC=1C=2C=C(N(C2C=CC1)CC(F)(F)F)I>CO[H].C=O.C(C)(=O)O.C(#N)[BH3-].[Na+]>F[C@@H]1CN(CC[C@@H]1NC=1C=2C=C(N(C2C=CC1)CC(F)(F)F)I)C"
+    },
+    {
+      "id": "reaction_10",
+      "reactants": {
+        "smiles": "CN1CCC(CC1)=O.IC=1N(C=2C=CC=C(C2C1)N)CC(F)(F)F",
+        "compounds": [
+          "CN1CCC(CC1)=O",
+          "IC=1N(C=2C=CC=C(C2C1)N)CC(F)(F)F"
+        ],
+        "count": 2
+      },
+      "reagents": {
+        "smiles": "CCO[H].[O-]CC.[Ti+4].[O-]CC.[O-]CC.[O-]CC.C(O)([O-])=O.[Na+].C(#N)[BH3-].[Na+]",
+        "compounds": [
+          "CCO[H]",
+          "[O-]CC",
+          "[Ti+4]",
+          "[O-]CC",
+          "[O-]CC",
+          "[O-]CC",
+          "C(O)([O-])=O",
+          "[Na+]",
+          "C(#N)[BH3-]",
+          "[Na+]"
+        ],
+        "count": 10
+      },
+      "products": {
+        "smiles": "IC=1N(C=2C=CC=C(C2C1)NC1CCN(CC1)C)CC(F)(F)F",
+        "compounds": [
+          "IC=1N(C=2C=CC=C(C2C1)NC1CCN(CC1)C)CC(F)(F)F"
+        ],
+        "count": 1
+      },
+      "metadata": {
+        "total_atoms": 74,
+        "atom_types": {
+          "C": 44,
+          "N": 7,
+          "O": 9,
+          "I": 2,
+          "F": 6,
+          "H": 2,
+          "Ti": 1,
+          "Na": 2,
+          "B": 1
+        },
+        "estimated_mw": 1188.33,
+        "has_reagents": true,
+        "reactant_count": 2,
+        "product_count": 1
+      },
+      "original_format": "CN1CCC(CC1)=O.IC=1N(C=2C=CC=C(C2C1)N)CC(F)(F)F>CCO[H].[O-]CC.[Ti+4].[O-]CC.[O-]CC.[O-]CC.C(O)([O-])=O.[Na+].C(#N)[BH3-].[Na+]>IC=1N(C=2C=CC=C(C2C1)NC1CCN(CC1)C)CC(F)(F)F"
+    }
+  ]
+}
