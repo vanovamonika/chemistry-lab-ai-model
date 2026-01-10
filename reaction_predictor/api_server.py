@@ -6,7 +6,7 @@ import uvicorn
 import time
 
 # Import your ReactionPredictor class
-from . import reaction_predictor
+from . import reaction_predictor_class as rp
 
 # Global shared instance
 predictor = None
@@ -25,7 +25,8 @@ async def lifespan(app: FastAPI):
     print("📦 Loading Ollama model (phi3:mini)...")
     
     try:
-        predictor = reaction_predictor.ReactionPredictor()
+        predictor = rp.ReactionPredictor()
+        print(predictor)
         # Optional: Test the model with a simple query
         print("✅ ReactionPredictor instance created successfully")
     except Exception as e:
@@ -52,36 +53,26 @@ app = FastAPI(
 )
 
 # Request Models
-class OrganicReactionRequest(BaseModel):
+class ReactionRequest(BaseModel):
     reactants: str
-    reagents: Optional[str] = ""
-    conditions: Optional[str] = ""
-    temperature: Optional[float] = 20.0
-    format: str = "names"  # "names" or "smiles"
-
-class InorganicReactionRequest(BaseModel):
-    reactants: str
-    reagents: Optional[str] = ""
     conditions: Optional[str] = ""
     temperature: Optional[float] = 20.0
 
 class VisualRequest(BaseModel):
-    type: str  # "compound" or "reaction"
     reaction: str
+    products: str 
+    reactant_visuals: str
     conditions: Optional[str] = "standard conditions"
 
 # Response Models
 class ReactionResponse(BaseModel):
     success: bool
     reactants: str
-    reagents: str
     products: str
-    reaction_type: str
     error: Optional[str] = None
 
 class VisualResponse(BaseModel):
     success: bool
-    type: str
     reaction: str
     visual_description: str
     error: Optional[str] = None
@@ -93,9 +84,9 @@ class HealthResponse(BaseModel):
 
 # Helper to get the predictor instance
 def get_predictor():
-    if reaction_predictor is None:
+    if predictor is None:
         raise RuntimeError("ReactionPredictor not initialized")
-    return reaction_predictor
+    return predictor
 
 # Root endpoint
 @app.get("/")
@@ -118,144 +109,66 @@ def read_root():
 def health_check():
     uptime = time.time() - start_time if start_time else 0
     return HealthResponse(
-        status="healthy" if reaction_predictor else "initializing",
+        status="healthy" if predictor else "initializing",
         uptime_seconds=round(uptime, 2),
-        model_loaded=reaction_predictor is not None
+        model_loaded=predictor is not None
     )
 
-# Organic reaction endpoint
-@app.post("/predict/organic", response_model=ReactionResponse)
-def predict_organic(request: OrganicReactionRequest):
-    """
-    Predict organic chemical reaction products
-    """
-    try:
-        predictor = get_predictor()
-        
-        products = predictor.predict_reaction(
-            reaction_type="organic",
-            format=request.format,
-            reactants=request.reactants,
-            reagents=request.reagents,
-            conditions=request.conditions,
-            temperature=request.temperature
-        )
-        
-        # Handle different return types from your class
-        if isinstance(products, list):
-            products = products[0] if products else "No products predicted"
-        
-        return ReactionResponse(
-            success=True,
-            reactants=request.reactants,
-            reagents=request.reagents or "",
-            products=products,
-            reaction_type="organic"
-        )
-    except Exception as e:
-        return ReactionResponse(
-            success=False,
-            reactants=request.reactants,
-            reagents=request.reagents or "",
-            products="",
-            reaction_type="organic",
-            error=str(e)
-        )
-
 # Inorganic reaction endpoint  
-@app.post("/predict/inorganic", response_model=ReactionResponse)
-def predict_inorganic(request: InorganicReactionRequest):
+@app.post("/predict/products", response_model=ReactionResponse)
+def predict_products(request: ReactionRequest):
+    print("Received request:", request)
     """
     Predict inorganic chemical reaction products
     """
     try:
         predictor = get_predictor()
-        
-        products = predictor.predict_inorganic_reaction(
+        print("Using predictor:", predictor)
+        products = predictor.predict_reaction_products(
             reactants=request.reactants,
-            reagents=request.reagents,
-            reaction_conditions=request.conditions,
-            temperature=request.temperature
+            reaction_conditions=request.conditions or "",
+            temperature=request.temperature or 20.0
         )
-        
-        # Handle different return types
-        if isinstance(products, list):
-            products = products[0] if products else "No products predicted"
+        print("Predicted products:", products)
         
         return ReactionResponse(
             success=True,
             reactants=request.reactants,
-            reagents=request.reagents or "",
             products=products,
-            reaction_type="inorganic"
         )
     except Exception as e:
         return ReactionResponse(
             success=False,
             reactants=request.reactants,
-            reagents=request.reagents or "",
             products="",
-            reaction_type="inorganic",
             error=str(e)
         )
 
 # Visual prediction endpoint
-@app.post("/predict/visual", response_model=VisualResponse)
-def predict_visual(request: VisualRequest):
+@app.post("/predict/reaction_visuals", response_model=VisualResponse)
+def predict_reaction_visuals(request: VisualRequest):
     """
     Generate visual description of a chemical compound or reaction
     """
     try:
         predictor = get_predictor()
         
-        visual_description = predictor.predict_visuals(
-            type=request.type,
+        visual_description = predictor.predict_reaction_visuals(
             reaction=request.reaction,
+            products=request.products,
+            reactant_visuals=request.reactant_visuals,
             conditions=request.conditions
         )
         
         return VisualResponse(
             success=True,
-            type=request.type,
             reaction=request.reaction,
             visual_description=visual_description
         )
     except Exception as e:
         return VisualResponse(
             success=False,
-            type=request.type,
             reaction=request.reaction,
             visual_description="",
             error=str(e)
         )
-
-# Examples endpoint
-@app.get("/examples")
-def get_examples():
-    return {
-        "note": "Use these examples with the POST endpoints",
-        "organic_example": {
-            "endpoint": "POST /predict/organic",
-            "body": {
-                "reactants": "benzene + nitric acid",
-                "reagents": "sulfuric acid",
-                "conditions": "50°C",
-                "format": "names"
-            }
-        },
-        "inorganic_example": {
-            "endpoint": "POST /predict/inorganic", 
-            "body": {
-                "reactants": "HCl + NaOH",
-                "conditions": "aqueous solution"
-            }
-        },
-        "visual_example": {
-            "endpoint": "POST /predict/visual",
-            "body": {
-                "type": "reaction",
-                "reaction": "2H2 + O2 → 2H2O",
-                "conditions": "combustion"
-            }
-        }
-    }

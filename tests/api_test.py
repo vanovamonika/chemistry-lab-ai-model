@@ -1,32 +1,38 @@
 import requests
+import json
 
-# All three endpoints
 base_url = "http://localhost:8000"
 
-# 1. Predict inorganic
-inorganic_response = requests.post(
-    f"{base_url}/predict/inorganic",
-    json={"reactants": "H2SO4 + KOH"}
-)
-print("Inorganic:", inorganic_response.json())
+# # 1. Predict inorganic
+# inorganic_response = requests.post(
+#     f"{base_url}/predict/products",
+#     json={"reactants": "CuSO4 + Zn"}
+# )
+# print("Inorganic:")
+# print(json.dumps(inorganic_response.json(), indent=2))
 
-# 2. Predict organic  
-organic_response = requests.post(
-    f"{base_url}/predict/organic",
-    json={
-        "reactants": "ethene",
-        "reagents": "bromine",
-        "format": "names"
-    }
-)
-print("Organic:", organic_response.json())
+# # 2. Predict organic  
+# organic_response = requests.post(
+#     f"{base_url}/predict/products",
+#     json={
+#         "reactants": "ethene + bromine",
+#         "format": "names"
+#     }
+# )
+# print("Organic:")
+# print(json.dumps(organic_response.json(), indent=2))
 
 # 3. Predict visual
 visual_response = requests.post(
-    f"{base_url}/predict/visual",
+    f"{base_url}/predict/reaction_visuals",
     json={
-        "type": "reaction",
-        "reaction": "CH4 + 2O2 → CO2 + 2H2O"
+        "reaction": "CuSO4 + Zn -> Cu + ZnSO4",
+        "products": "Cu, ZnSO4",
+        "reactant_visuals": "{\"CuSO4\": {\"color\": \"#55aaff, \"state\": \"aqueous solution\"}, \"Zn\": {\"color\": \"#cccccc, \"state\": \"solid\"}}",
+        "conditions": "standard laboratory conditions"
     }
 )
-print("Visual:", visual_response.json())
+print("Visual:")
+print(visual_response)
+# print(visual_response.json())
+print(json.dumps(visual_response.json(), indent=3))

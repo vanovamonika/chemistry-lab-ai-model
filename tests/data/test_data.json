@@ -1,0 +1,13 @@
+[
+    {
+        "reactants": "[Na+]CCO + CI",
+        "conditions": "",
+        "temperature": 25.0,
+        "expected": {
+            "products": ["COCC", "NaI"],
+            "must_contain": ["COCC"],
+            "must_not_contain": ["[Na+]CCO", "CI"],
+            "equation": "C₂H₅ONa + CH₃I → CH₃OC₂H₅ + NaI"
+        }
+    }
+]

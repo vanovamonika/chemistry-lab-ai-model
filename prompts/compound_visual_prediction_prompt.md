@@ -1,18 +1,8 @@
-As an expert chemist, describe the physical appearance of {compound_name} at room temperature.
-        
-Focus ONLY on observable physical properties:
-- Color (colorless, white, yellow, blue, etc.)
-- Physical state (solid, liquid, gas, powder, crystalline)
-- Form (crystalline, amorphous, powder, flakes, etc.)
-- Transparency (transparent, opaque, translucent)
+As an expert chemist using previously provided knowledge, describe the physical appearance of {compound} at room temperature.
+Use the knowledge previously provided and be concise and accurate.
 
-Be concise and accurate. Use typical laboratory descriptions.
-Return ONLY the description without any additional text.
-
-Return as JSON with this structure :  
+Give me the color and state of the chemical compound in the form of the following JSON structure without any additional text:
 {{
-    "color": "string",
-    "state": "solid/liquid/gas/powder/crystalline",
-    "form": "string",
-    "transparency": "transparent/opaque"
+    "color": "string", - color of the compound as hex code and then string (one or two word), separated by comma
+    "state": "solid/liquid/gas/powder/aqueous solution",
 }}

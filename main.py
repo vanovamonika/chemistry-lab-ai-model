@@ -67,7 +67,7 @@ def main():
     # Run API server in background thread
     api_thread = threading.Thread(target=run_api_server, daemon=True)
     api_thread.start()
-    
+    # run_api_server()
     print("API server started at http://localhost:8000")
     print("Interactive docs: http://localhost:8000/docs")
     
