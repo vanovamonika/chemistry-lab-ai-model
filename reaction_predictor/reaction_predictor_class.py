@@ -8,6 +8,8 @@ from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 from . import smiles_converter
 import os
 import json
+from .dto import ReactionResponse, VisualResponse
+import re
 try:
     from PyPDF2 import PdfReader
 except ImportError:
@@ -15,16 +17,16 @@ except ImportError:
 
 CHROMA_PATH = "chroma"
 DATA_PATH = "data"
-PROMPT_FILE_PATH = "prompts/only_products_prompt.md"
+PROMPT_FILE_PATH = "prompts/only_equation_prompt.md"
 ANALYZE_REACTANTS_PROMPT_PATH = "prompts/analyze_reactants_prompt.md"
 PROCESS_KNOWLEDGE_PROMPT_PATH = "prompts/process_knowledge.md"
 
 class ReactionPredictor:
     def __init__(self):
         self.model = OllamaLLM(model="phi3:mini")
-        self.knowledge_base = ""
-        self._load_knowledge_base()
-        self._process_chemistry_knowledge(self.knowledge_base)
+        # self.knowledge_base = ""
+        # self._load_knowledge_base()
+        # self._process_chemistry_knowledge(self.knowledge_base)
 
     def _load_knowledge_base(self):
         """Load all data files from the data folder into a knowledge base string"""
@@ -137,10 +139,41 @@ class ReactionPredictor:
         compound_analysis = self.model.invoke(compound_analysis_prompt)
         return compound_analysis
 
+    def get_raw_products(self, part: str):
+        """Extract raw products (chemical formulas only, without state symbols) from model response"""
+        try:
+            print("Extracting products from model response part:\n", part)
+            all_products = re.split(r'->|→', part)[1].strip()
+            print("Raw predicted products:", all_products)
+            if "No Reaction" in all_products or "No reaction" in all_products:
+                print("No reaction detected in products.")
+                return ["No Reaction"]
+            print("All products string:", all_products)
+            products = all_products.split(" + ")
+            print("Split products:", products)
+            raw_products = []
+            for prod in products:
+                # if prod == products[-1]:  # Last product may contain extra text after products
+                #     # Split with multiple possible delimiters: space, newline, period, comma
+                #     prod = re.split(r'\(', prod)[0]
+                product = prod.strip()
+                # Remove state symbols like (g), (l), (s), (aq) from the product formula
+                # Also remove any coefficients at the beginning (e.g., "2H2O" -> "H2O")
+                clean_product = product
+                
+                # Remove state symbols in parentheses
+                clean_product = re.sub(r'\([a-z]+\)$', '', clean_product)
+                # Remove leading coefficients (e.g., "2" from "2H2O")
+                clean_product = re.sub(r'^\d+', '', clean_product)
+
+                raw_products.append(clean_product)
+            print("Extracted products:", raw_products)
+            return raw_products
+        except Exception as e:
+            print(f"Error extracting products from model response: {e}")
+            return ""
+
     def predict_reaction_products(self, reactants, reaction_conditions="", temperature=20.0):
-        print("Reactants: ", reactants)
-        print("Conditions: ", reaction_conditions)
-        print("Temperature: ", temperature)
         # reactants_analysis = self.analyze_reactants(reactants)
         # print("Reactants analysis:\n", reactants_analysis)
         # Load the prompt template
@@ -153,38 +186,35 @@ class ReactionPredictor:
             Question: {question}
             
             Please analyze this chemical reaction and predict the products.
-            """
-
-        # Prepare the DB with the same embeddings used for creation
-        # embedding_function = HuggingFaceEmbeddings(
-        #     model_name="sentence-transformers/all-MiniLM-L6-v2"
-        # )
-        # print("Preparing Chroma DB for retrieval...")
-        # db = Chroma(persist_directory=CHROMA_PATH, embedding_function=embedding_function)
-        # print("Chroma DB is ready.")
-        # # Search the DB.
-        # results = db.similarity_search_with_relevance_scores(reactants_analysis, k=3)
-        # if len(results) == 0:
-        #     print(f"Unable to find matching results.")
-        #     return
-        
+            """        
         # context_text = "\n\n---\n\n".join([doc.page_content for doc, _score in results])
         prompt_template = ChatPromptTemplate.from_template(prompt_template_content)
         prompt = prompt_template.format(reactants=reactants,
                                     reaction_conditions=reaction_conditions, 
                                     temperature=temperature)
         
-        # print("Context used:\n", context_text)
-        # print("\n" + "="*50 + "\n")
         print("Generating response...")
         response_text = self.model.invoke(prompt)
-
-        # sources = [doc.metadata.get("source", None) for doc, _score in results]
-        # formatted_response = f"Response: {response_text}\nSources: {sources}"
-        # print(formatted_response)
-        result = response_text.split("\n\n")
-        # print("Generated reaction products:\n", result)
-        return result[0]
+        print("Raw model response:\n", response_text)
+        parts = response_text.split(";")
+        print("Parts:\n")
+        for i, part in enumerate(parts):
+            print(f"Part {i}:\n{part}\n{'-'*40}\n")
+        
+        # Use get_raw_products to extract clean product formulas
+        products = self.get_raw_products(parts[0])
+        print("Predicted products:", products)
+        
+        response = ReactionResponse(
+            success=True,
+            reactants=reactants,
+            products=products,
+            reaction=response_text,
+            generated_response=response_text
+        )
+        
+        print("Response:\n", response)
+        return response
     
     def predict_compound_visuals(self, compound, conditions="standard conditions"):
         file_path = "prompts/compound_visual_prediction_prompt.md"

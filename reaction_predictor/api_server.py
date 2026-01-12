@@ -1,9 +1,8 @@
 from fastapi import FastAPI
-from pydantic import BaseModel
-from typing import Optional
 from contextlib import asynccontextmanager
-import uvicorn
 import time
+
+from .dto import ReactionRequest, VisualRequest, ReactionResponse, VisualResponse, HealthResponse
 
 # Import your ReactionPredictor class
 from . import reaction_predictor_class as rp
@@ -52,36 +51,6 @@ app = FastAPI(
     lifespan=lifespan
 )
 
-# Request Models
-class ReactionRequest(BaseModel):
-    reactants: str
-    conditions: Optional[str] = ""
-    temperature: Optional[float] = 20.0
-
-class VisualRequest(BaseModel):
-    reaction: str
-    products: str 
-    reactant_visuals: str
-    conditions: Optional[str] = "standard conditions"
-
-# Response Models
-class ReactionResponse(BaseModel):
-    success: bool
-    reactants: str
-    products: str
-    error: Optional[str] = None
-
-class VisualResponse(BaseModel):
-    success: bool
-    reaction: str
-    visual_description: str
-    error: Optional[str] = None
-
-class HealthResponse(BaseModel):
-    status: str
-    uptime_seconds: float
-    model_loaded: bool
-
 # Helper to get the predictor instance
 def get_predictor():
     if predictor is None:
@@ -124,18 +93,19 @@ def predict_products(request: ReactionRequest):
     try:
         predictor = get_predictor()
         print("Using predictor:", predictor)
-        products = predictor.predict_reaction_products(
+        response = predictor.predict_reaction_products(
             reactants=request.reactants,
             reaction_conditions=request.conditions or "",
             temperature=request.temperature or 20.0
         )
-        print("Predicted products:", products)
+        print("Response:", response)
         
-        return ReactionResponse(
-            success=True,
-            reactants=request.reactants,
-            products=products,
-        )
+        # return ReactionResponse(
+        #     success=True,
+        #     reactants=request.reactants,
+        #     products=products,
+        # )
+        return response
     except Exception as e:
         return ReactionResponse(
             success=False,

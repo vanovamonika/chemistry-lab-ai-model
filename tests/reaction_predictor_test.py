@@ -33,10 +33,9 @@ class ReactionPredictorTest():
             conditions = test_case["conditions"]
             temperature = test_case["temperature"]
             expected_products = test_case["expected"]["must_contain"]
-            # expected_products = test_case["expected"]["products"]
 
             print(f"Testing with reactants: {reactants}, conditions: {conditions}, temperature: {temperature}")
-            predicted_reaction = self.predictor.predict_organic_reaction(
+            predicted_reaction = self.predictor.predict_reaction_products(
                 reactants=reactants,
                 reaction_conditions=conditions,
                 temperature=temperature
@@ -45,13 +44,8 @@ class ReactionPredictorTest():
             parts = predicted_reaction.split("->")
             if len(parts) != 2:
                 raise ValueError(f"Invalid reaction format: {predicted_reaction}")
-            predicted_products = parts[1].strip().split(" + ")
-            print(f"Predicted product: {predicted_products}")
-            predicted_names = sc.get_name_reaction_formula_from_smiles(predicted_products).split(" + ")
-            print(f"Predicted product names: {predicted_names}")
-            expected_names = sc.get_name_reaction_formula_from_smiles(".".join(expected_products)).split(" + ")
-            print(f"Expected product names: {expected_names}")
-            assert all(prod in predicted_names for prod in expected_names), f"Expected all of {expected_products}, but got {predicted_products}"
+            predicted_products = parts[1].strip().split(" → ")
+            assert all(prod in predicted_products for prod in expected_products), f"Expected all of {expected_products}, but got {predicted_products}"
 
 if __name__ == "__main__":
     tester = ReactionPredictorTest()

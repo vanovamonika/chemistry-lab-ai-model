@@ -1,13 +1,233 @@
 [
     {
-        "reactants": "[Na+]CCO + CI",
+        "reactants": "C2H5OH + O2",
+        "conditions": "combustion",
+        "temperature": 25.0,
+        "expected": {
+            "products": ["CO2", "H2O"],
+            "must_contain": ["CO2", "H2O"],
+            "must_not_contain": ["C2H5OH", "O2", "CO", "C"],
+            "equation": "C2H5OH + 3O2 → 2CO2 + 3H2O"
+        }
+    },
+    {
+        "reactants": "H2 + O2",
+        "conditions": "combustion",
+        "temperature": 25.0,
+        "expected": {
+            "products": ["H2O"],
+            "must_contain": ["H2O"],
+            "must_not_contain": ["H2", "O2", "HO2", "H2O2"],
+            "equation": "2H2 + O2 → 2H2O"
+        }
+    },
+    {
+        "reactants": "NaOH + HCl",
+        "conditions": "aqueous solution",
+        "temperature": 25.0,
+        "expected": {
+            "products": ["NaCl", "H2O"],
+            "must_contain": ["NaCl", "H2O"],
+            "must_not_contain": ["NaOH", "HCl", "Na+", "Cl-", "H+"],
+            "equation": "NaOH + HCl → NaCl + H2O"
+        }
+    },
+    {
+        "reactants": "Mg + HCl",
+        "conditions": "aqueous solution",
+        "temperature": 25.0,
+        "expected": {
+            "products": ["MgCl2", "H2"],
+            "must_contain": ["MgCl2", "H2"],
+            "must_not_contain": ["Mg", "HCl", "MgH"],
+            "equation": "Mg + 2HCl → MgCl2 + H2"
+        }
+    },
+    {
+        "reactants": "CaCO3",
+        "conditions": "thermal decomposition",
+        "temperature": 900.0,
+        "expected": {
+            "products": ["CaO", "CO2"],
+            "must_contain": ["CaO", "CO2"],
+            "must_not_contain": ["CaCO3", "C", "O2"],
+            "equation": "CaCO3 → CaO + CO2"
+        }
+    },
+    {
+        "reactants": "CH4 + O2",
+        "conditions": "complete combustion",
+        "temperature": 25.0,
+        "expected": {
+            "products": ["CO2", "H2O"],
+            "must_contain": ["CO2", "H2O"],
+            "must_not_contain": ["CH4", "O2", "CO", "C"],
+            "equation": "CH4 + 2O2 → CO2 + 2H2O"
+        }
+    },
+    {
+        "reactants": "Al + O2",
+        "conditions": "combustion",
+        "temperature": 25.0,
+        "expected": {
+            "products": ["Al2O3"],
+            "must_contain": ["Al2O3"],
+            "must_not_contain": ["Al", "O2", "AlO", "Al2O"],
+            "equation": "4Al + 3O2 → 2Al2O3"
+        }
+    },
+    {
+        "reactants": "Na + Cl2",
+        "conditions": "direct combination",
+        "temperature": 25.0,
+        "expected": {
+            "products": ["NaCl"],
+            "must_contain": ["NaCl"],
+            "must_not_contain": ["Na", "Cl2", "Na2Cl", "NaCl2"],
+            "equation": "2Na + Cl2 → 2NaCl"
+        }
+    },
+    {
+        "reactants": "H2SO4 + NaOH",
+        "conditions": "neutralization",
+        "temperature": 25.0,
+        "expected": {
+            "products": ["Na2SO4", "H2O"],
+            "must_contain": ["Na2SO4", "H2O"],
+            "must_not_contain": ["H2SO4", "NaOH", "NaHSO4"],
+            "equation": "H2SO4 + 2NaOH → Na2SO4 + 2H2O"
+        }
+    },
+    {
+        "reactants": "Fe + CuSO4",
+        "conditions": "single displacement",
+        "temperature": 25.0,
+        "expected": {
+            "products": ["FeSO4", "Cu"],
+            "must_contain": ["FeSO4", "Cu"],
+            "must_not_contain": ["Fe", "CuSO4", "Fe2(SO4)3"],
+            "equation": "Fe + CuSO4 → FeSO4 + Cu"
+        }
+    },
+    {
+        "reactants": "AgNO3 + NaCl",
+        "conditions": "precipitation",
+        "temperature": 25.0,
+        "expected": {
+            "products": ["AgCl", "NaNO3"],
+            "must_contain": ["AgCl", "NaNO3"],
+            "must_not_contain": ["AgNO3", "NaCl", "Ag2Cl"],
+            "equation": "AgNO3 + NaCl → AgCl + NaNO3"
+        }
+    },
+    {
+        "reactants": "NH3 + HCl",
+        "conditions": "gas phase reaction",
+        "temperature": 25.0,
+        "expected": {
+            "products": ["NH4Cl"],
+            "must_contain": ["NH4Cl"],
+            "must_not_contain": ["NH3", "HCl", "NH4", "Cl-"],
+            "equation": "NH3 + HCl → NH4Cl"
+        }
+    },
+    {
+        "reactants": "Zn + H2SO4",
+        "conditions": "dilute acid",
+        "temperature": 25.0,
+        "expected": {
+            "products": ["ZnSO4", "H2"],
+            "must_contain": ["ZnSO4", "H2"],
+            "must_not_contain": ["Zn", "H2SO4", "ZnH"],
+            "equation": "Zn + H2SO4 → ZnSO4 + H2"
+        }
+    },
+    {
+        "reactants": "KClO3",
+        "conditions": "thermal decomposition",
+        "temperature": 400.0,
+        "expected": {
+            "products": ["KCl", "O2"],
+            "must_contain": ["KCl", "O2"],
+            "must_not_contain": ["KClO3", "KClO4"],
+            "equation": "2KClO3 → 2KCl + 3O2"
+        }
+    },
+    {
+        "reactants": "C3H8 + O2",
         "conditions": "",
         "temperature": 25.0,
         "expected": {
-            "products": ["COCC", "NaI"],
-            "must_contain": ["COCC"],
-            "must_not_contain": ["[Na+]CCO", "CI"],
-            "equation": "C₂H₅ONa + CH₃I → CH₃OC₂H₅ + NaI"
+            "products": ["CO2", "H2O"],
+            "must_contain": ["No Reaction"],
+            "must_not_contain": ["C3H8", "O2", "CO", "C"],
+            "equation": "C3H8 + 5O2 → 3CO2 + 4H2O"
+        }
+    },
+    {
+        "reactants": "Pb(NO3)2 + KI",
+        "conditions": "",
+        "temperature": 25.0,
+        "expected": {
+            "products": ["PbI2", "KNO3"],
+            "must_contain": ["PbI2", "KNO3"],
+            "must_not_contain": ["Pb(NO3)2", "KI", "PbI4"],
+            "equation": "Pb(NO3)2 + 2KI → PbI2 + 2KNO3"
+        }
+    },
+    {
+        "reactants": "C6H12O6 + O2",
+        "conditions": "",
+        "temperature": 37.0,
+        "expected": {
+            "products": ["CO2", "H2O"],
+            "must_contain": ["CO2", "H2O"],
+            "must_not_contain": ["C6H12O6", "O2", "C", "CO"],
+            "equation": "C6H12O6 + 6O2 → 6CO2 + 6H2O"
+        }
+    },
+    {
+        "reactants": "Na2CO3 + HCl",
+        "conditions": "",
+        "temperature": 25.0,
+        "expected": {
+            "products": ["NaCl", "H2O", "CO2"],
+            "must_contain": ["NaCl", "H2O", "CO2"],
+            "must_not_contain": ["Na2CO3", "HCl", "NaHCO3"],
+            "equation": "Na2CO3 + 2HCl → 2NaCl + H2O + CO2"
+        }
+    },
+    {
+        "reactants": "C2H4 + H2",
+        "conditions": "",
+        "temperature": 150.0,
+        "expected": {
+            "products": ["C2H6"],
+            "must_contain": ["C2H6"],
+            "must_not_contain": ["C2H4", "H2"],
+            "equation": "C2H4 + H2 → C2H6"
+        }
+    },
+    {
+        "reactants": "BaCl2 + Na2SO4",
+        "conditions": "",
+        "temperature": 25.0,
+        "expected": {
+            "products": ["BaSO4", "NaCl"],
+            "must_contain": ["BaSO4", "NaCl"],
+            "must_not_contain": ["BaCl2", "Na2SO4", "BaCl4"],
+            "equation": "BaCl2 + Na2SO4 → BaSO4 + 2NaCl"
+        }
+    },
+    {
+        "reactants": "C4H10 + O2",
+        "conditions": "",
+        "temperature": 25.0,
+        "expected": {
+            "products": ["CO2", "H2O"],
+            "must_contain": ["CO2", "H2O"],
+            "must_not_contain": ["C4H10", "O2", "CO", "C"],
+            "equation": "2C4H10 + 13O2 → 8CO2 + 10H2O"
         }
     }
 ]
