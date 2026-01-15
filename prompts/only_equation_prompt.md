@@ -18,9 +18,7 @@ If no reaction occurs, write "No Reaction occurs" instead of the products after 
 
 If the reactants only remain in their ionic forms, write the equation in ionic form (including charges).
 
-After the chemical equation write (";").
-
-DO NOT include any additional text or explanation, only the balanced chemical equation with states.
-
+After the chemical equation write (";") and after that DO NOT include any additional text or explanation.
+So the final output format should be only the balanced chemical equation followed by a semicolon, like the Example Output below.
 **Example Output:**
 AgNO3(aq) + NaCl(aq) -> AgCl(s) + NaNO3(aq)

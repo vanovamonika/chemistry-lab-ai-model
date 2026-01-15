@@ -24,9 +24,9 @@ PROCESS_KNOWLEDGE_PROMPT_PATH = "prompts/process_knowledge.md"
 class ReactionPredictor:
     def __init__(self):
         self.model = OllamaLLM(model="phi3:mini")
-        # self.knowledge_base = ""
-        # self._load_knowledge_base()
-        # self._process_chemistry_knowledge(self.knowledge_base)
+        self.knowledge_base = ""
+        self._load_knowledge_base()
+        self._process_chemistry_knowledge(self.knowledge_base)
 
     def _load_knowledge_base(self):
         """Load all data files from the data folder into a knowledge base string"""
@@ -143,7 +143,7 @@ class ReactionPredictor:
         """Extract raw products (chemical formulas only, without state symbols) from model response"""
         try:
             print("Extracting products from model response part:\n", part)
-            all_products = re.split(r'->|→', part)[1].strip()
+            all_products = re.split(r'->|→|=>|⇌', part)[1].strip()
             print("Raw predicted products:", all_products)
             if "No Reaction" in all_products or "No reaction" in all_products:
                 print("No reaction detected in products.")
@@ -196,11 +196,12 @@ class ReactionPredictor:
         print("Generating response...")
         response_text = self.model.invoke(prompt)
         print("Raw model response:\n", response_text)
-        parts = response_text.split(";")
+        parts = re.split(r'[;\n]', response_text)
         print("Parts:\n")
         for i, part in enumerate(parts):
             print(f"Part {i}:\n{part}\n{'-'*40}\n")
-        
+        equation = parts[0].strip()
+        print("Predicted equation:", equation)
         # Use get_raw_products to extract clean product formulas
         products = self.get_raw_products(parts[0])
         print("Predicted products:", products)
@@ -209,7 +210,7 @@ class ReactionPredictor:
             success=True,
             reactants=reactants,
             products=products,
-            reaction=response_text,
+            equation=equation,
             generated_response=response_text
         )
         
@@ -222,7 +223,9 @@ class ReactionPredictor:
         visuals_prompt = ChatPromptTemplate.from_template(prompt)
         formatted_visuals_prompt = visuals_prompt.format(compound=compound, conditions=conditions)
         visuals = self.model.invoke(formatted_visuals_prompt)
-        return self.extract_json(visuals)
+        compound_visuals_json = self.extract_json(visuals)
+        print("Compound visuals:\n", compound_visuals_json)
+        return compound_visuals_json
     
     def predict_reaction_visuals(self, reaction, products, reactant_visuals, conditions="standard conditions"):
         file_path = "prompts/reaction_visual_prediction_prompt.md"
@@ -233,12 +236,82 @@ class ReactionPredictor:
                                                          reactant_visuals=reactant_visuals, 
                                                          conditions=conditions)
         visuals = self.model.invoke(formatted_visuals_prompt)
-        return self.extract_json(visuals)
+        # print("Raw reaction visuals response:\n", visuals)
+        reaction_visuals_json = self.extract_json(visuals)
+        print("Reaction visuals:\n", reaction_visuals_json)
+        return reaction_visuals_json
     
     def extract_json(self, text):
-        """Extract JSON from LLM response"""
-        if '```json' in text:
-            text = text.split('```json')[1].split('```')[0]
-        elif '```' in text:
-            text = text.split('```')[1]
-        return text.strip()
+        """Extract JSON from LLM response and parse it as a dict, handling unquoted keys and comments"""
+        try:
+            # First, try to remove markdown code blocks if present
+            if '```json' in text:
+                text = text.split('```json')[1].split('```')[0]
+            elif '```' in text:
+                text = text.split('```')[1].split('```')[0]
+            
+            text = text.strip()
+            
+            # # Find JSON content between { and }
+            # start_idx = text.find('{')
+            # if start_idx == -1:
+            #     raise ValueError("No JSON object found in text")
+            
+            # # Find the matching closing brace
+            # brace_count = 0
+            # end_idx = -1
+            # for i in range(start_idx, len(text)):
+            #     if text[i] == '{':
+            #         brace_count += 1
+            #     elif text[i] == '}':
+            #         brace_count -= 1
+            #         if brace_count == 0:
+            #             end_idx = i + 1
+            #             break
+            
+            # if end_idx == -1:
+            #     raise ValueError("Mismatched braces in JSON")
+            
+            # json_str = text[start_idx:end_idx]
+            
+            # Clean up the JSON string to fix common LLM formatting issues
+            json_str = self._clean_json_string(text)
+            
+            # Parse the JSON string into a dictionary
+            parsed_json = json.loads(json_str)
+            return parsed_json
+        except json.JSONDecodeError as e:
+            print(f"Error parsing JSON: {e}")
+            return {}
+    
+    def _clean_json_string(self, json_str):
+        """Clean up JSON string to handle unquoted keys, comments, and trailing commas"""
+        # Remove comments (everything after // on a line)
+        lines = json_str.split('\n')
+        cleaned_lines = []
+        for line in lines:
+            # Remove // comments but keep content before the comment
+            if '//' in line:
+                line = line.split('//')[0]
+            cleaned_lines.append(line)
+        json_str = '\n'.join(cleaned_lines)
+        
+        # Replace single quotes with double quotes for string values
+        # But be careful not to replace quotes inside already-quoted strings
+        json_str = json_str.replace("'", '"')
+        
+        # Remove trailing commas before } and ]
+        json_str = re.sub(r',(\s*[}\]])', r'\1', json_str)
+        
+        # Add quotes around unquoted keys
+        # Match: identifier followed by : (with optional whitespace)
+        json_str = re.sub(r'([{,\s])([a-zA-Z_][a-zA-Z0-9_]*)\s*:', r'\1"\2":', json_str)
+        
+        # Fix missing commas between properties
+        # Add comma between a closing brace/bracket and a quoted key, or between value and key
+        json_str = re.sub(r'([\]}\w"])\s+(")', r'\1, \2', json_str)
+        
+        # Remove any duplicate commas
+        json_str = re.sub(r',\s*,', ',', json_str)
+        
+        return json_str

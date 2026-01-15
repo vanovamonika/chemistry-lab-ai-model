@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from contextlib import asynccontextmanager
 import time
 
-from .dto import ReactionRequest, VisualRequest, ReactionResponse, VisualResponse, HealthResponse
+from .dto import CompoundVisualRequest, ReactionRequest, VisualRequest, ReactionResponse, VisualResponse, HealthResponse
 
 # Import your ReactionPredictor class
 from . import reaction_predictor_class as rp
@@ -110,7 +110,9 @@ def predict_products(request: ReactionRequest):
         return ReactionResponse(
             success=False,
             reactants=request.reactants,
-            products="",
+            products=[],
+            equation="",
+            generated_response="",
             error=str(e)
         )
 
@@ -140,5 +142,31 @@ def predict_reaction_visuals(request: VisualRequest):
             success=False,
             reaction=request.reaction,
             visual_description="",
+            error=str(e)
+        )
+    
+@app.post("/predict/compound_visuals", response_model=VisualResponse)
+def predict_compound_visuals(request: CompoundVisualRequest):
+    """
+    Generate visual description of a chemical compound or reaction
+    """
+    try:
+        predictor = get_predictor()
+        visual_description = predictor.predict_compound_visuals(
+            compound=request.compound,
+            conditions=request.conditions
+        )
+        print("Visual description generated:", visual_description)
+        print(type(visual_description))
+        return VisualResponse(
+            success=True,
+            reaction=request.compound,
+            visual_description=visual_description
+        )
+    except Exception as e:
+        return VisualResponse(
+            success=False,
+            reaction=request.compound,
+            visual_description={},
             error=str(e)
         )

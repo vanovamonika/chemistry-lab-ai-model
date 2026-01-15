@@ -13,19 +13,23 @@ class VisualRequest(BaseModel):
     reactant_visuals: str
     conditions: Optional[str] = "standard conditions"
 
+class CompoundVisualRequest(BaseModel):
+    compound: str
+    conditions: Optional[str] = "standard conditions"
+
 # Response Models
 class ReactionResponse(BaseModel):
     success: bool
     reactants: str
     products: list[str]
-    reaction: str
+    equation: str
     generated_response: str
     error: Optional[str] = None
 
 class VisualResponse(BaseModel):
     success: bool
     reaction: str
-    visual_description: str
+    visual_description: dict
     error: Optional[str] = None
 
 class HealthResponse(BaseModel):

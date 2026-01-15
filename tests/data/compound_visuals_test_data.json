@@ -1,0 +1,182 @@
+[
+    {
+        "compound": "NaCl",
+        "expected": {
+            "success": true,
+            "visual_description": {"color": "#ffffff, white", "state": "solid"},
+            "error": null
+        },
+        "description": "Simple ionic compound - table salt"
+    },
+    {
+        "compound": "H2O at 25°C",
+        "expected": {
+            "success": true,
+            "visual_description": {"color": "#a0d2ff, colorless", "state": "liquid"},
+            "error": null
+        },
+        "description": "Water at room temperature"
+    },
+    {
+        "compound": "CuSO4·5H2O",
+        "expected": {
+            "success": true,
+            "visual_description": {"color": "#64b5f6, blue", "state": "solid"},
+            "error": null
+        },
+        "description": "Copper sulfate pentahydrate - blue crystals"
+    },
+    {
+        "compound": "Fe2O3",
+        "expected": {
+            "success": true,
+            "visual_description": {"color": "#ff6b35, reddish-brown", "state": "solid"},
+            "error": null
+        },
+        "description": "Iron oxide - rust"
+    },
+    {
+        "compound": "I2",
+        "expected": {
+            "success": true,
+            "visual_description": {"color": "#9400d3, purple", "state": "solid"},
+            "error": null
+        },
+        "description": "Iodine crystals"
+    },
+    {
+        "compound": "HCl(aq)",
+        "expected": {
+            "success": true,
+            "visual_description": {"color": "#ffffff, colorless", "state": "aqueous solution"},
+            "error": null
+        },
+        "description": "Hydrochloric acid solution"
+    },
+    {
+        "compound": "KMnO4",
+        "expected": {
+            "success": true,
+            "visual_description": {"color": "#9c27b0, purple", "state": "solid"},
+            "error": null
+        },
+        "description": "Potassium permanganate"
+    },
+    {
+        "compound": "S (sulfur)",
+        "expected": {
+            "success": true,
+            "visual_description": {"color": "#ffeb3b, yellow", "state": "solid"},
+            "error": null
+        },
+        "description": "Elemental sulfur"
+    },
+    {
+        "compound": "Hg (mercury) at 20°C",
+        "expected": {
+            "success": true,
+            "visual_description": {"color": "#c0c0c0, silver", "state": "liquid"},
+            "error": null
+        },
+        "description": "Liquid mercury at room temperature"
+    },
+    {
+        "compound": "NaOH (aq)",
+        "expected": {
+            "success": true,
+            "visual_description": {"color": "#ffffff, colorless", "state": "aqueous solution"},
+            "error": null
+        },
+        "description": "Sodium hydroxide solution"
+    },
+    {
+        "compound": "AgCl",
+        "expected": {
+            "success": true,
+            "visual_description": {"color": "#d3d3d3, white", "state": "solid"},
+            "error": null
+        },
+        "description": "Silver chloride precipitate"
+    },
+    {
+        "compound": "Cu",
+        "expected": {
+            "success": true,
+            "visual_description": {"color": "#b87333, reddish-brown", "state": "solid"},
+            "error": null
+        },
+        "description": "Copper metal"
+    },
+    {
+        "compound": "K2Cr2O7",
+        "expected": {
+            "success": true,
+            "visual_description": {"color": "#ff4500, orange-red", "state": "solid"},
+            "error": null
+        },
+        "description": "Potassium dichromate"
+    },
+    {
+        "compound": "CO2 at 25°C",
+        "expected": {
+            "success": true,
+            "visual_description": {"color": "#ffffff, colorless", "state": "gas"},
+            "error": null
+        },
+        "description": "Carbon dioxide gas"
+    },
+    {
+        "compound": "Mg ribbon",
+        "expected": {
+            "success": true,
+            "visual_description": {"color": "#d4d4d4, silver", "state": "solid"},
+            "error": null
+        },
+        "description": "Magnesium metal"
+    },
+    {
+        "compound": "MnO2",
+        "expected": {
+            "success": true,
+            "visual_description": {"color": "#424242, black", "state": "solid"},
+            "error": null
+        },
+        "description": "Manganese dioxide"
+    },
+    {
+        "compound": "NaHCO3",
+        "expected": {
+            "success": true,
+            "visual_description": {"color": "#ffffff, white", "state": "powder"},
+            "error": null
+        },
+        "description": "Baking soda"
+    },
+    {
+        "compound": "FeCl3(aq)",
+        "expected": {
+            "success": true,
+            "visual_description": {"color": "#ff6b6b, yellow-brown", "state": "aqueous solution"},
+            "error": null
+        },
+        "description": "Iron(III) chloride solution"
+    },
+    {
+        "compound": "Br2 at 25°C",
+        "expected": {
+            "success": true,
+            "visual_description": {"color": "#8b0000, reddish-brown", "state": "liquid"},
+            "error": null
+        },
+        "description": "Bromine liquid"
+    },
+    {
+        "compound": "CaCO3 (powdered)",
+        "expected": {
+            "success": true,
+            "visual_description": {"color": "#ffffff, white", "state": "powder"},
+            "error": null
+        },
+        "error_test": false
+    }
+]
