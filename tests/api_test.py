@@ -5,6 +5,7 @@ from color_utils import extract_hex_code, compare_hex_codes
 
 base_url = "http://localhost:8000"
 COLOR_TOLERANCE = 50  # Adjust tolerance: 0=exact, 20=strict, 50=normal, 100=loose
+LOOSE_TOLERANCE = 100  # For looser color comparisons
 
 def load_test_data(filepath):
         # Load or define test data for organic reactions
@@ -109,8 +110,8 @@ def test_color_state(predicted, expected):
     predicted_hex = extract_hex_code(str(predicted_color))
     expected_hex = extract_hex_code(str(expected_color))
     
-    color_match = compare_hex_codes(predicted_hex, expected_hex, tolerance=COLOR_TOLERANCE)
-    
+    hex_color_match = compare_hex_codes(predicted_hex, expected_hex, tolerance=COLOR_TOLERANCE)
+    loose_hex_color_match = compare_hex_codes(predicted_hex, expected_hex, tolerance=LOOSE_TOLERANCE)
     # Compare states
     predicted_state = str(predicted.get("state", "unknown")).lower()
     expected_state = str(expected.get("state", "unknown")).lower()
@@ -121,11 +122,10 @@ def test_color_state(predicted, expected):
     print(f"Expected color: {expected_color}")
     print(f"  Predicted hex: {predicted_hex}")
     print(f"  Expected hex: {expected_hex}")
-    print(f"  Color match: {color_match}")
+    print(f"  Color match: {hex_color_match}")
     print(f"Predicted state: {predicted_state}, Expected state: {expected_state}")
     print(f"State match: {state_match}")
-    
-    return color_match, state_match
+    return hex_color_match, state_match, loose_hex_color_match, 
 
 def predict_compound_visuals_test(filepath):
     """
@@ -138,6 +138,7 @@ def predict_compound_visuals_test(filepath):
     test_data = load_test_data(filepath)
     test_results = {
         "color": 0,
+        "loose_color": 0,
         "state": 0,
         "total_tests": len(test_data),
     }
@@ -159,11 +160,13 @@ def predict_compound_visuals_test(filepath):
             if visual_description and isinstance(visual_description, dict):
                 expected_visual = test_case.get("expected", {}).get("visual_description", {})
                 print(f"Expected visual description: {expected_visual}")
-                color_match, state_match = test_color_state(visual_description, expected_visual)
+                color_match, state_match, loose_color_match = test_color_state(visual_description, expected_visual)
                 if color_match:
                     test_results["color"] += 1
                 if state_match:
                     test_results["state"] += 1
+                if loose_color_match:
+                    test_results["loose_color"] += 1
             else:
                 print(f"✗ Empty response or invalid format")
         
@@ -183,8 +186,8 @@ def predict_reaction_visuals_test(filepath):
     """
     test_data = load_test_data(filepath)
     test_results = {
-        "midde" : {"color": 0, "state": 0,},
-        "final" : {"color": 0, "state": 0,},
+        "middle" : {"color": 0, "loose_color": 0, "state": 0},
+        "final" : {"color": 0, "loose_color": 0, "state": 0},
         "total_tests": len(test_data),
     }
     
@@ -212,17 +215,21 @@ def predict_reaction_visuals_test(filepath):
                 # print(f"Predicted visual description: {visual_description}")
                 middle_visual = visual_description.get("middle_of_reaction", {})
                 expected_middle_visual = expected_visuals.get("middle_of_reaction", {})
-                middle_color_match, middle_state_match = test_color_state(middle_visual, expected_middle_visual)
+                middle_color_match, middle_state_match, middle_loose_color_match = test_color_state(middle_visual, expected_middle_visual)
                 if middle_color_match:
-                    test_results["midde"]["color"] += 1
+                    test_results["middle"]["color"] += 1
+                if middle_loose_color_match:
+                    test_results["middle"]["loose_color"] += 1
                 if middle_state_match:
-                    test_results["midde"]["state"] += 1
+                    test_results["middle"]["state"] += 1
                 
                 final_visual = visual_description.get("final_state", {})
                 expected_final_visual = expected_visuals.get("final_state", {})
-                final_color_match, final_state_match = test_color_state(final_visual, expected_final_visual)
+                final_color_match, final_state_match, final_loose_color_match = test_color_state(final_visual, expected_final_visual)
                 if final_color_match:
                     test_results["final"]["color"] += 1
+                if final_loose_color_match:
+                    test_results["final"]["loose_color"] += 1
                 if final_state_match:
                     test_results["final"]["state"] += 1
         except Exception as e:
@@ -233,8 +240,8 @@ def predict_reaction_visuals_test(filepath):
 
 
 if __name__ == "__main__":
-    predict_products_test("data/products_test_data.json")
+    # predict_products_test("data/products_test_data.json")
     # predict_products_test("data/organic_test_data.json")
     # predict_products_test("data/inorganic_test_data.json")
-    # predict_compound_visuals_test("data/compound_visuals_test_data.json")
+    predict_compound_visuals_test("data/compound_visuals_test_data.json")
     # predict_reaction_visuals_test("data/reaction_visuals_test_data.json")

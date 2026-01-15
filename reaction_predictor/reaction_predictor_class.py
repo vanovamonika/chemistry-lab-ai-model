@@ -23,7 +23,7 @@ PROCESS_KNOWLEDGE_PROMPT_PATH = "prompts/process_knowledge.md"
 
 class ReactionPredictor:
     def __init__(self):
-        self.model = OllamaLLM(model="phi3:mini")
+        self.model = OllamaLLM(model="phi3:mini")  # Changed this
         self.knowledge_base = ""
         self._load_knowledge_base()
         self._process_chemistry_knowledge(self.knowledge_base)

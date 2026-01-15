@@ -8,6 +8,10 @@ crystalline solids are in aqueous solution form and all metals are in their elem
 All other chemicals are in their typical state (solid, liquid, gas) at room temperature.
 If there are no changes in a particular characteristic, indicate "no change" for that characteristic.
 All the color descriptions should be as short and specific as possible.
+If the solution is colorless, put #ffffff as the hex code and "colorless" as the color description (one word).
+so the color item for colorless solutions should be:
+
+"color": "#ffffff,colorless",
 
 Return as JSON with this structure:
 {{
