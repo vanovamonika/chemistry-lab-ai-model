@@ -22,6 +22,8 @@ If the reactants only remain in their ionic forms, write the equation in ionic f
 DO NOT include any additional explanations or text apart from the chemical equation and product list in the format bellow
 as the equation and product list will be parsed programmatically
 and any extra text may cause parsing errors.
+Double check that the formed products are in line with all chemical knowledge and the provided information about the reactants and reaction conditions.
+Make sure the chemical equation is balanced and correctly formatted with states of matter in brackets.
 
 **Output Format:**
 [Balanced Chemical Equation]

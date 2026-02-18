@@ -1,8 +1,10 @@
 from fastapi import FastAPI
 from contextlib import asynccontextmanager
 import time
-
-from .dto import CompoundVisualRequest, ReactionRequest, VisualRequest, ReactionResponse, VisualResponse, HealthResponse
+from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
+from typing import Dict, Any
+from .dto import CompleteReactionRequest, CompleteReactionResponse, CompoundVisualRequest, ReactionRequest, VisualRequest, ReactionResponse, VisualResponse, HealthResponse
 
 # Import your ReactionPredictor class
 from . import reaction_predictor_class as rp
@@ -51,6 +53,20 @@ app = FastAPI(
     lifespan=lifespan
 )
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:3000",  # Next.js dev
+        # "http://localhost:3001",  # Alternative port
+        # "https://your-production-domain.com",  # Production
+    ],
+    allow_credentials=True,
+    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allow_headers=["*"],
+    expose_headers=["*"],
+    max_age=600,  # Cache preflight requests for 10 minutes
+)
+
 # Helper to get the predictor instance
 def get_predictor():
     if predictor is None:
@@ -63,7 +79,7 @@ def read_root():
     return {
         "api": "Chemical Reaction Predictor",
         "version": "1.0.0",
-        "model": "phi3:mini via Ollama",
+        "model": "wizardlm2:7b via Ollama",
         "endpoints": {
             "/predict/organic": "POST - Predict organic reaction",
             "/predict/inorganic": "POST - Predict inorganic reaction", 
@@ -82,6 +98,45 @@ def health_check():
         uptime_seconds=round(uptime, 2),
         model_loaded=predictor is not None
     )
+
+@app.post("/predict/reaction", response_model=CompleteReactionResponse)
+def predict_reaction(request: CompleteReactionRequest):
+    print("Received request:", request)
+    """
+    Predict chemical reaction products, equation and visual description based on reactants, conditions and temperature
+    """
+    try:
+        predictor = get_predictor()
+        print("Using predictor:", predictor)
+        response = predictor.predict_reaction(
+            reactants=request.reactants,
+            reactant_visuals=request.reactant_visuals,
+            reaction_conditions=request.conditions or "",
+            temperature=request.temperature or 20.0
+        )
+        print("Response:", response)
+        
+        # Update response with visual description
+        
+        return CompleteReactionResponse(
+            success=True,
+            reactants=request.reactants,
+            products=response["products"],
+            equation=response["equation"],
+            # generated_response=response["generated_response"],
+            visual_description=response["visual_description"]
+        )
+    except Exception as e:
+        print(f"Error during prediction: {e}")
+        return CompleteReactionResponse(
+            success=False,
+            reactants=request.reactants,
+            products=[],
+            equation="",
+            generated_response="",
+            visual_description={},
+            error=str(e)
+        )
 
 # Inorganic reaction endpoint  
 @app.post("/predict/products", response_model=ReactionResponse)
@@ -170,3 +225,23 @@ def predict_compound_visuals(request: CompoundVisualRequest):
             visual_description={},
             error=str(e)
         )
+
+@app.options("/predict/reaction")
+async def options_route():
+    return {"message": "OK"}
+
+@app.options("/predict/compound_visuals")
+async def options_route():
+    return {"message": "OK"}
+
+@app.options("/predict/reaction_visuals")
+async def options_route():
+    return {"message": "OK"}
+
+@app.options("/predict/products")
+async def options_route():
+    return {"message": "OK"}
+
+@app.options("/health")
+async def options_route():
+    return {"message": "OK"}

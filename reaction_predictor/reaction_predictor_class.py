@@ -23,7 +23,7 @@ PROCESS_KNOWLEDGE_PROMPT_PATH = "prompts/process_knowledge.md"
 
 class ReactionPredictor:
     def __init__(self):
-        self.model = OllamaLLM(model="phi3:mini")  # Changed this
+        self.model = OllamaLLM(model="wizardlm2:7b")  # Changed this
         self.knowledge_base = ""
         self._load_knowledge_base()
         self._process_chemistry_knowledge(self.knowledge_base)
@@ -153,9 +153,6 @@ class ReactionPredictor:
             print("Split products:", products)
             raw_products = []
             for prod in products:
-                # if prod == products[-1]:  # Last product may contain extra text after products
-                #     # Split with multiple possible delimiters: space, newline, period, comma
-                #     prod = re.split(r'\(', prod)[0]
                 product = prod.strip()
                 # Remove state symbols like (g), (l), (s), (aq) from the product formula
                 # Also remove any coefficients at the beginning (e.g., "2H2O" -> "H2O")
@@ -171,7 +168,22 @@ class ReactionPredictor:
             return raw_products
         except Exception as e:
             print(f"Error extracting products from model response: {e}")
-            return ""
+            return []
+    
+    def predict_reaction(self, reactants, reactant_visuals, reaction_conditions="", temperature=20.0):
+        """Predict a full chemical reaction including products and visual description"""
+        products_response = self.predict_reaction_products(reactants, reaction_conditions, temperature)
+        visual_description = self.predict_reaction_visuals(
+            reaction=products_response.equation,
+            products=products_response.products,
+            reactant_visuals=reactant_visuals,
+            conditions=reaction_conditions
+        )
+        return {
+            "products": products_response.products,
+            "equation": products_response.equation,
+            "visual_description": visual_description
+        }
 
     def predict_reaction_products(self, reactants, reaction_conditions="", temperature=20.0):
         # reactants_analysis = self.analyze_reactants(reactants)

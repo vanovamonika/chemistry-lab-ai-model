@@ -36,3 +36,18 @@ class HealthResponse(BaseModel):
     status: str
     uptime_seconds: float
     model_loaded: bool
+
+class CompleteReactionResponse(BaseModel):
+    success: bool
+    reactants: str
+    products: list[str]
+    equation: str
+    # generated_response: str
+    visual_description: dict
+    error: Optional[str] = None
+
+class CompleteReactionRequest(BaseModel):
+    reactants: str
+    conditions: Optional[str] = ""
+    temperature: Optional[float] = 20.0
+    reactant_visuals: str
