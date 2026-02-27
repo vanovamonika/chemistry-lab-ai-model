@@ -10,6 +10,11 @@ For crystalline solids, assume they are in aqueous solution form and all metals 
 
 Finally, provide the balanced chemical equation for the reaction along with a list of products in the specified format.
 
+YOU ARE REQUIRED TO:
+1. Use the web search tool
+2. Find verified reaction products
+3. Return balanced equation and products in the specified format.
+
 Output ONLY the balanced chemical equation WITH THE STATE OF EACH CHEMICAL IN BRACKETS.
 Make sure numbers of elements on both left and right side (reactants and products) of the equation are equal (balanced equation)
 and if the equation includes charges, ensure that the total charge on both sides is equal as well.
