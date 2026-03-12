@@ -13,6 +13,8 @@ class ChemicalVisualDescription(BaseModel):
     color: str
     state: str
     soluble_in_water: bool
+    density: Optional[float] = None
+    molar_mass: Optional[float] = None
 
 class ChemicalVisualResponse(BaseModel):
     success: bool

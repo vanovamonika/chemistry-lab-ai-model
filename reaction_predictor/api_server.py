@@ -9,8 +9,41 @@ from . import ollama_reaction_predictor as rp
 from . import ollama_test
 import time
 import os
+from typing import Any, Optional
 from dotenv import load_dotenv
 load_dotenv()
+
+
+def _property_response(success: bool, value: Optional[float] = None, message: Optional[str] = None):
+    """
+    Stable response shape consumed by backend/frontend:
+    { success: bool, value: number | null, message?: string }
+    """
+    payload = {
+        "success": success,
+        "value": value,
+    }
+    if message:
+        payload["message"] = message
+    return payload
+
+
+def _normalize_numeric_property(raw_value: Any, property_name: str):
+    """
+    Normalize model output into a positive float or return (None, error_message).
+    """
+    if raw_value is None:
+        return None, f"{property_name} prediction returned null"
+
+    try:
+        numeric_value = float(raw_value)
+    except (TypeError, ValueError):
+        return None, f"Invalid {property_name} value type: {type(raw_value).__name__}"
+
+    if numeric_value <= 0:
+        return None, f"Invalid {property_name} value: must be > 0"
+
+    return numeric_value, None
 
 # Global shared instance
 predictor = None
@@ -126,6 +159,66 @@ async def predict_compound_visuals(request: ChemicalVisualRequest):
             error=str(e)
         )
 
+@app.get("/predict/density")
+async def predict_density(formula: str, name: str = None, conditions: str = "standard conditions"):
+    """
+    Predict the density of a chemical compound
+    Query parameters:
+    - formula: Chemical formula (e.g., "H2O")
+    - name: Common name (optional, e.g., "water")
+    - conditions: Environmental conditions (optional, default: "standard conditions")
+    
+    Returns: { "success": bool, "value": float | null, "message": str }
+    """
+    try:
+        print(f"📏 Predicting density for {name or formula}...")
+        density_raw = await ollama_test.predict_density(
+            formula=formula,
+            name=name or formula,
+            conditions=conditions
+        )
+        density, validation_error = _normalize_numeric_property(density_raw, "density")
+
+        if validation_error:
+            print(f"⚠️ Density prediction validation failed: {validation_error}")
+            return _property_response(False, None, validation_error)
+
+        print(f"✅ Density prediction: {density}")
+        return _property_response(True, density, "Density prediction succeeded")
+    except Exception as e:
+        print(f"❌ Error predicting density: {e}")
+        return _property_response(False, None, str(e))
+
+@app.get("/predict/molar-mass")
+async def predict_molar_mass(formula: str, name: str = None, conditions: str = "standard conditions"):
+    """
+    Predict the molar mass of a chemical compound
+    Query parameters:
+    - formula: Chemical formula (e.g., "H2O")
+    - name: Common name (optional, e.g., "water")
+    - conditions: Environmental conditions (optional, default: "standard conditions")
+    
+    Returns: { "success": bool, "value": float | null, "message": str }
+    """
+    try:
+        print(f"⚗️ Predicting molar mass for {name or formula}...")
+        molar_mass_raw = await ollama_test.predict_molar_mass(
+            formula=formula,
+            name=name or formula,
+            conditions=conditions
+        )
+        molar_mass, validation_error = _normalize_numeric_property(molar_mass_raw, "molar mass")
+
+        if validation_error:
+            print(f"⚠️ Molar mass prediction validation failed: {validation_error}")
+            return _property_response(False, None, validation_error)
+
+        print(f"✅ Molar mass prediction: {molar_mass}")
+        return _property_response(True, molar_mass, "Molar mass prediction succeeded")
+    except Exception as e:
+        print(f"❌ Error predicting molar mass: {e}")
+        return _property_response(False, None, str(e))
+
 @app.post("/predict/products", response_model=ProductsResponse)
 async def predict_products(request: ProductsRequest):
     print("Received request:", request)
@@ -156,79 +249,18 @@ async def predict_products(request: ProductsRequest):
             equation="",
             error=str(e)
         )
-
-# @app.post("/predict/reaction", response_model=CompleteReactionResponse)
-# async def predict_reaction(request: CompleteReactionRequest):
-#     print("Received request:", request)
-#     """
-#     Predict chemical reaction products, equation and visual description based on reactants, conditions and temperature
-#     """
-#     try:
-#         predictor = get_predictor()
-#         print("Using predictor:", predictor)
-#         response = await predictor.predict_reaction(
-#             reactants=request.reactants,
-#             reactant_visuals=request.reactant_visuals,
-#             reaction_conditions=request.conditions or "",
-#             temperature=request.temperature or 20.0
-#         )
-#         print("Response:", response)
-        
-#         return response
-#     except Exception as e:
-#         print(f"Error during prediction: {e}")
-#         return CompleteReactionResponse(
-#             success=False,
-#             reactants=request.reactants,
-#             products=[],
-#             equation="",
-#             generated_response="",
-#             visual_description={},
-#             error=str(e)
-#         )
-
-
-
-# # Visual prediction endpoint
-# @app.post("/predict/reaction_visuals", response_model=VisualResponse)
-# def predict_reaction_visuals(request: VisualRequest):
-#     """
-#     Generate visual description of a chemical compound or reaction
-#     """
-#     try:
-#         predictor = get_predictor()
-        
-#         visual_description = predictor.predict_reaction_visuals(
-#             reaction=request.reaction,
-#             products=request.products,
-#             reactant_visuals=request.reactant_visuals,
-#             conditions=request.conditions
-#         )
-        
-#         return VisualResponse(
-#             success=True,
-#             reaction=request.reaction,
-#             visual_description=visual_description
-#         )
-#     except Exception as e:
-#         return VisualResponse(
-#             success=False,
-#             reaction=request.reaction,
-#             visual_description="",
-#             error=str(e)
-#         )
-
-# @app.options("/predict/reaction")
-# async def options_route():
-#     return {"message": "OK"}
-
+    
 @app.options("/predict/compound_visuals")
 async def options_route():
     return {"message": "OK"}
 
-# @app.options("/predict/reaction_visuals")
-# async def options_route():
-#     return {"message": "OK"}
+@app.options("/predict/density")
+async def options_density():
+    return {"message": "OK"}
+
+@app.options("/predict/molar-mass")
+async def options_molar_mass():
+    return {"message": "OK"}
 
 @app.options("/predict/products")
 async def options_route():

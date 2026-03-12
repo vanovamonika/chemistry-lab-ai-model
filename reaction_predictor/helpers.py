@@ -60,21 +60,34 @@ def parse_solubility(soluble: Any) -> bool:
     return bool(soluble)
 
 def extract_json(text: str) -> Dict[str, Any]:
-        """Extract JSON from LLM response and parse it"""
+        """Extract JSON object from LLM response and parse it safely."""
         try:
-            # Remove markdown code blocks
+            if text is None:
+                return {}
+
+            # Remove markdown code blocks if present
             if '```json' in text:
-                text = text.split('```json')[1].split('```')[0]
+                text = text.split('```json', 1)[1].split('```', 1)[0]
             elif '```' in text:
-                text = text.split('```')[1].split('```')[0]
-            
+                text = text.split('```', 1)[1].split('```', 1)[0]
+
             text = text.strip()
-            
-            # Clean the JSON string
+            if not text:
+                return {}
+
+            # If response contains additional prose, extract first JSON object block
+            start = text.find('{')
+            end = text.rfind('}')
+            if start != -1 and end != -1 and end > start:
+                text = text[start:end + 1]
+
             json_str = _clean_json_string(text)
-            
-            return json.loads(json_str)
-            
+            if not json_str:
+                return {}
+
+            parsed = json.loads(json_str)
+            return parsed if isinstance(parsed, dict) else {}
+
         except json.JSONDecodeError as e:
             print(f"Error parsing JSON: {e}")
             return {}
@@ -84,14 +97,11 @@ def extract_json(text: str) -> Dict[str, Any]:
 
 def _clean_json_string(json_str: str) -> str:
     """Clean up JSON string to handle common formatting issues"""
-    # Remove comments
-    lines = json_str.split('\n')
-    cleaned_lines = []
-    for line in lines:
-        if '//' in line:
-            line = line.split('//')[0]
-        cleaned_lines.append(line)
-    json_str = '\n'.join(cleaned_lines)
+    if not json_str:
+        return ""
+
+    # Remove JS-style line comments without destroying valid content
+    json_str = re.sub(r'//.*$', '', json_str, flags=re.MULTILINE)
     
     # Replace single quotes with double quotes
     json_str = json_str.replace("'", '"')
@@ -102,4 +112,4 @@ def _clean_json_string(json_str: str) -> str:
     # Add quotes around unquoted keys
     json_str = re.sub(r'([{,\s])([a-zA-Z_][a-zA-Z0-9_]*)\s*:', r'\1"\2":', json_str)
     
-    return json_str
+    return json_str.strip()

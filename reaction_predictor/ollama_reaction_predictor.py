@@ -103,6 +103,22 @@ class OllamaReactionPredictor:
             formatted_prompt = formatted_prompt.replace(placeholder, str(value))
         
         return formatted_prompt
+
+    def _parse_density(self, value: Any) -> Optional[float]:
+        if value is None:
+            return None
+        if isinstance(value, (int, float)):
+            return float(value) if value > 0 else None
+        if isinstance(value, str):
+            normalized = value.strip().lower().replace('g/ml', '').replace('g/cm3', '').strip()
+            if normalized in {'', 'null', 'none', 'unknown', 'n/a'}:
+                return None
+            try:
+                parsed = float(normalized)
+                return parsed if parsed > 0 else None
+            except ValueError:
+                return None
+        return None
     
     
     
@@ -375,7 +391,8 @@ class OllamaReactionPredictor:
                         color_hex="#ffffff",
                         color="unknown",
                         state="unknown",
-                        soluble_in_water=False
+                        soluble_in_water=False,
+                        density=None
                     ),
                     error="Request timed out after 30 seconds"
                 )
@@ -395,7 +412,8 @@ class OllamaReactionPredictor:
                 color_hex=json_data.get('color_hex', '#ffffff'),
                 color=json_data.get('color', 'unknown'),
                 state=json_data.get('state', 'unknown'),
-                soluble_in_water=self._parse_solubility(json_data.get('soluble_in_water', True))
+                soluble_in_water=self._parse_solubility(json_data.get('soluble_in_water', True)),
+                density=self._parse_density(json_data.get('density'))
             )
             
             return ChemicalVisualResponse(
@@ -418,7 +436,8 @@ class OllamaReactionPredictor:
                     color_hex="#ffffff",
                     color="unknown",
                     state="unknown",
-                    soluble_in_water=False
+                    soluble_in_water=False,
+                    density=None
                 ),
                 error=str(e)
             )
