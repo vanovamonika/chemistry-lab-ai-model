@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from contextlib import asynccontextmanager
 import time
 from fastapi.middleware.cors import CORSMiddleware
-from .dto import ChemicalVisualRequest, ChemicalVisualResponse, CompleteReactionRequest, CompleteReactionResponse, HealthResponse, ProductsRequest, ProductsResponse, ReactionRequest
+from .dto import ChemicalBatchRequest, ChemicalVisualDescription, ChemicalVisualRequest, ChemicalVisualResponse, CompleteReactionRequest, CompleteReactionResponse, HealthResponse, ProductsRequest, ProductsResponse, ReactionRequest
 
 # Import your ReactionPredictor class
 from . import ollama_reaction_predictor as rp
@@ -155,9 +155,46 @@ async def predict_compound_visuals(request: ChemicalVisualRequest):
             success=False,
             formula=request.formula,
             name=request.name,
-            visual_description={},
+            visual_description=ChemicalVisualDescription(
+                color_hex="#ffffff",
+                color="unknown",
+                state="unknown",
+                soluble_in_water=False,
+                density=None,
+                molar_mass=None,
+            ),
             error=str(e)
         )
+
+
+@app.post("/predict/compound_visuals/batch", response_model=list[ChemicalVisualResponse])
+async def predict_compound_visuals_batch(request: ChemicalBatchRequest):
+    """
+    Generate visual descriptions (including resolved name and density)
+    for multiple chemicals concurrently.
+    """
+    try:
+        payload = [chemical.model_dump() for chemical in request.chemicals]
+        responses = await ollama_test.get_all_chemical_data(payload)
+        return responses
+    except Exception as e:
+        # Keep response shape predictable even on top-level failure
+        return [
+            ChemicalVisualResponse(
+                success=False,
+                formula="unknown",
+                name="unknown",
+                visual_description=ChemicalVisualDescription(
+                    color_hex="#ffffff",
+                    color="unknown",
+                    state="unknown",
+                    soluble_in_water=False,
+                    density=None,
+                    molar_mass=None,
+                ),
+                error=str(e),
+            )
+        ]
 
 @app.get("/predict/density")
 async def predict_density(formula: str, name: str = None, conditions: str = "standard conditions"):
@@ -252,6 +289,11 @@ async def predict_products(request: ProductsRequest):
     
 @app.options("/predict/compound_visuals")
 async def options_route():
+    return {"message": "OK"}
+
+
+@app.options("/predict/compound_visuals/batch")
+async def options_compound_visuals_batch():
     return {"message": "OK"}
 
 @app.options("/predict/density")

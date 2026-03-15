@@ -8,6 +8,16 @@ class ChemicalVisualRequest(BaseModel):
     conditions: Optional[str] = "standard conditions"
     temperature: Optional[float] = 20.0
 
+
+class ChemicalBatchItem(BaseModel):
+    formula: str
+    name: Optional[str] = None
+    conditions: Optional[str] = "standard conditions"
+
+
+class ChemicalBatchRequest(BaseModel):
+    chemicals: list[ChemicalBatchItem]
+
 class ChemicalVisualDescription(BaseModel):
     color_hex: str
     color: str
