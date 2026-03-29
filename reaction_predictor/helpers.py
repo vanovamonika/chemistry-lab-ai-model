@@ -17,9 +17,58 @@ def normalize_equation_line(text: str) -> str:
 
     cleaned = text.strip()
 
+    def _trim_equation_prose(value: str) -> str:
+        candidate = (value or "").strip()
+        # Remove common explanatory tails that can follow a valid equation in prose
+        candidate = re.sub(r"\s+(under|in|at|with|where|because|since)\b.*$", "", candidate, flags=re.IGNORECASE)
+        return candidate.strip()
+
     # Remove markdown code fences if present
     if "```" in cleaned:
         cleaned = cleaned.replace("```", "\n")
+
+    # Normalize common LaTeX/math wrappers and arrow symbols
+    cleaned = cleaned.replace("\\[", " ").replace("\\]", " ")
+    cleaned = cleaned.replace("\\(", " ").replace("\\)", " ")
+    cleaned = cleaned.replace("$", " ")
+    cleaned = cleaned.replace("\\rightarrow", "→")
+    cleaned = cleaned.replace("\\to", "→")
+    cleaned = cleaned.replace("\\Rightarrow", "→")
+    cleaned = cleaned.replace("\\longrightarrow", "→")
+
+    # Unwrap LaTeX text blocks and subscripts/superscripts (e.g. \text{H}_2\text{O})
+    cleaned = re.sub(r"\\text\{([^}]*)\}", r"\1", cleaned)
+    cleaned = re.sub(r"_\{([^}]*)\}", r"\1", cleaned)
+    cleaned = re.sub(r"\^\{([^}]*)\}", r"\1", cleaned)
+    cleaned = re.sub(r"_([0-9]+)", r"\1", cleaned)
+
+    # 1) Prefer a line/segment that already contains a reaction arrow
+    equation_span_pattern = re.compile(
+        r"([A-Za-z0-9\(\)\[\]\+\-\.·\s]+(?:->|→|=>|⇌)[A-Za-z0-9\(\)\[\]\+\-\.·\s]+)"
+    )
+
+    for segment in re.split(r"[\n;]", cleaned):
+        candidate = segment.strip().strip("*`[]")
+        if not candidate:
+            continue
+
+        # Handle labels like "Balanced Chemical Equation: HCl + NaOH → ..."
+        if ":" in candidate:
+            after_colon = candidate.split(":", 1)[1].strip()
+            if re.search(r"->|→|=>|⇌", after_colon):
+                span_match = equation_span_pattern.search(after_colon)
+                extracted = span_match.group(1).strip() if span_match else after_colon
+                return _trim_equation_prose(extracted)
+
+        if re.search(r"->|→|=>|⇌", candidate):
+            span_match = equation_span_pattern.search(candidate)
+            extracted = span_match.group(1).strip() if span_match else candidate
+            return _trim_equation_prose(extracted)
+
+    # 2) Fallback: extract first equation-like span with an arrow from full text
+    match = equation_span_pattern.search(cleaned)
+    if match:
+        return _trim_equation_prose(match.group(1).strip())
 
     # Use only first logical line / statement
     first_line = re.split(r"[\n;]", cleaned, maxsplit=1)[0].strip()
