@@ -49,6 +49,7 @@ def predict_products_test(filepath):
         predicted_products = response.json().get("products", [])
         predicted_equation = response.json().get("equation", "")
         print("Predicted products:", predicted_products)
+        print("Expected products to contain:", must_contain)
         if predicted_products:
             try:
                 assert all(prod in predicted_products for prod in must_contain), f"Expected all of {must_contain}, but got {predicted_products}"
@@ -240,8 +241,7 @@ def predict_reaction_visuals_test(filepath):
 
 
 if __name__ == "__main__":
-    # predict_products_test("data/products_test_data.json")
+    predict_products_test("data/products_test_data.json")
     # predict_products_test("data/organic_test_data.json")
     # predict_products_test("data/inorganic_test_data.json")
-    predict_compound_visuals_test("data/compound_visuals_test_data.json")
-    # predict_reaction_visuals_test("data/reaction_visuals_test_data.json")
+    # predict_compound_visuals_test("data/compound_visuals_test_data.json")
